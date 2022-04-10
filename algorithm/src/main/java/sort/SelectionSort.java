@@ -31,11 +31,28 @@ public class SelectionSort {
      *  < 0 说明 a < b
      *  = 0 即 a == b
      *  > 0 即 a > b
+     *
+     *  //循环不变量   arr[0...i)是有序的；arr[i...n)是无序的
      */
     public static <T extends Comparable<T>> void sort(T[] arr) {
         for(int i = 0; i < arr.length; i++) {
             int minIndex = i;   //选择 arr[i...n)中最小值的索引
             for(int j = i + 1; j < arr.length; j++) {
+                if(arr[j].compareTo(arr[minIndex]) < 0)
+                    minIndex = j;
+            }
+            swap(arr, i, minIndex);
+        }
+    }
+
+    /**
+     * //循环不变量   arr[0...i)是无序的；arr[i...n)是有序的
+     * 实现 desc     e.g.  5,4,3,2,1
+     */
+    public static <T extends Comparable<T>> void oppositeSort(T[] arr) {
+        for(int i = arr.length - 1; i >= 0; i--) {
+            int minIndex = i;   //选择 arr[0...i)中最小值的索引
+            for(int j = i - 1; j >= 0; j--) {
                 if(arr[j].compareTo(arr[minIndex]) < 0)
                     minIndex = j;
             }
@@ -56,8 +73,12 @@ public class SelectionSort {
     }
 
     public static void main(String[] args) {
-        testTimeComplexity(10000);
-        testTimeComplexity(100000);
+//        testTimeComplexity(10000);
+//        testTimeComplexity(100000);
+
+        Integer[] integers = ArrayGenerator.generateRandomIntegerArray(10, 10);
+        SelectionSort.oppositeSort(integers);
+        System.out.println(Arrays.toString(integers));
     }
 
     public static void testIntArr() {
