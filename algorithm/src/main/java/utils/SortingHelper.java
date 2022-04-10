@@ -39,6 +39,7 @@ public class SortingHelper {
         if(!SortingHelper.isSorted(arr, true)) {
             throw new RuntimeException("algorithm failed");
         }
-        System.out.println((end - start) / 1000000000.0 + " s");
+        double usedTime = (end - start) / 1000000000.0;
+        System.out.printf("%s, n = %d, %f s%n", sortName, arr.length, usedTime);
     }
 }
