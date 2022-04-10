@@ -1,5 +1,6 @@
 package utils;
 
+import sort.InsertionSort;
 import sort.SelectionSort;
 
 public class SortingHelper {
@@ -33,6 +34,8 @@ public class SortingHelper {
 
         if("SelectionSort".equals(sortName)) {
             SelectionSort.sort(arr);
+        } else if("InsertionSort".equals(sortName)) {
+            InsertionSort.sort(arr);
         }
 
         long end = System.nanoTime();

@@ -32,7 +32,7 @@ public class SelectionSort {
      *  = 0 即 a == b
      *  > 0 即 a > b
      *
-     *  //循环不变量   arr[0...i)是有序的；arr[i...n)是无序的
+     *  循环不变量   arr[0...i)是有序的；arr[i...n)是无序的
      */
     public static <T extends Comparable<T>> void sort(T[] arr) {
         for(int i = 0; i < arr.length; i++) {
@@ -73,12 +73,7 @@ public class SelectionSort {
     }
 
     public static void main(String[] args) {
-//        testTimeComplexity(10000);
-//        testTimeComplexity(100000);
-
-        Integer[] integers = ArrayGenerator.generateRandomIntegerArray(10, 10);
-        SelectionSort.oppositeSort(integers);
-        System.out.println(Arrays.toString(integers));
+        testOppositeSort();
     }
 
     public static void testIntArr() {
@@ -102,8 +97,18 @@ public class SelectionSort {
         System.out.println(Arrays.toString(students));
     }
 
-    public static void testTimeComplexity(int n) {
-        Integer[] integers = ArrayGenerator.generateRandomIntegerArray(n, n);
-        SortingHelper.testSort("SelectionSort", integers);
+    public static void testTimeComplexity() {
+        int[] dataSize = {10000, 100000};
+        for(int n : dataSize) {
+            Integer[] integers = ArrayGenerator.generateRandomIntegerArray(n, n);
+            SortingHelper.testSort("SelectionSort", integers);
+        }
+    }
+
+    public static void testOppositeSort() {
+        Integer[] integers = ArrayGenerator.generateRandomIntegerArray(10, 10);
+        System.out.println(Arrays.toString(integers));
+        SelectionSort.oppositeSort(integers);
+        System.out.println(Arrays.toString(integers));
     }
 }
