@@ -8,6 +8,7 @@ import java.util.Arrays;
 
 /**
  * 每次选择还没处理的元素里最小的元素 （原地排序）
+ * O(n^2)
  */
 public class SelectionSort {
     //循环不变量   arr[0...i)是有序的；arr[i...n)是无序的
@@ -56,6 +57,7 @@ public class SelectionSort {
 
     public static void main(String[] args) {
         testTimeComplexity(10000);
+        testTimeComplexity(100000);
     }
 
     public static void testIntArr() {
