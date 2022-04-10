@@ -55,7 +55,7 @@ public class SelectionSort {
     }
 
     public static void main(String[] args) {
-        System.out.println(testTimeComplexity(10000));
+        testTimeComplexity(10000);
     }
 
     public static void testIntArr() {
@@ -79,14 +79,8 @@ public class SelectionSort {
         System.out.println(Arrays.toString(students));
     }
 
-    public static double testTimeComplexity(int n) {
+    public static void testTimeComplexity(int n) {
         Integer[] integers = ArrayGenerator.generateRandomIntegerArray(n, n);
-        long start = System.nanoTime();
-        SelectionSort.sort(integers);
-        long end = System.nanoTime();
-        if(SortingHelper.isSorted(integers, true)) {
-            return (end - start) / 1000000000.0;
-        }
-        throw new RuntimeException("algorithm failed");
+        SortingHelper.testSort("SelectionSort", integers);
     }
 }

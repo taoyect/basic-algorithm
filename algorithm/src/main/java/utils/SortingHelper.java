@@ -36,9 +36,9 @@ public class SortingHelper {
         }
 
         long end = System.nanoTime();
-        if(SortingHelper.isSorted(arr, true)) {
-            System.out.println((end - start) / 1000000000.0 + " s");
+        if(!SortingHelper.isSorted(arr, true)) {
+            throw new RuntimeException("algorithm failed");
         }
-        throw new RuntimeException("algorithm failed");
+        System.out.println((end - start) / 1000000000.0 + " s");
     }
 }
