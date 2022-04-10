@@ -11,6 +11,10 @@ import java.util.Objects;
  */
 public class LinearSearch {
 
+    /**
+     * 泛型标记<T> 应放置在方法的返回类型前
+     * static 可以放置在泛型标记前的任意位置
+     */
    public static <T> int search(T[] arr, T target) {
         for(int i=0; i<arr.length; i++) {
             if(Objects.equals(arr[i], target)) {
