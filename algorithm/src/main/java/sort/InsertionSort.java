@@ -23,7 +23,7 @@ public class InsertionSort {
 //                    break;
 //            }
             for(int j = i; j - 1 >= 0 && arr[j - 1].compareTo(arr[j]) > 0; j--) {
-                swap(arr, j - 1, j);
+                swap(arr, j - 1, j); //不满足升序，做交换
             }
         }
     }

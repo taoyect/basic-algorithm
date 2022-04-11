@@ -20,7 +20,7 @@ public class SelectionSort {
                 if (arr[j] < arr[minIndex])
                     minIndex = j;
             }
-            swap(arr, i, minIndex);
+            swap(arr, i, minIndex);//把arr[i...n)中的最小值和arr[i]交换
         }
     }
 
