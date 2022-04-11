@@ -7,12 +7,12 @@ public class Main {
 
     public static <T extends Comparable<T>> void sort(T[] arr) {
         for(int i = 0; i < arr.length; i++) {
-            int minIndex = i;
-            for(int j = i + 1; j < arr.length; j++) {
-                if(arr[j].compareTo(arr[minIndex]) < 0)
-                    minIndex = j;
+            T temp = arr[i];
+            int j = i;
+            for(; j - 1 >= 0 && arr[j - 1].compareTo(temp) > 0; j--) {
+                arr[j] = arr[j - 1];
             }
-            swap(arr, i, minIndex);
+            arr[j] = temp;
         }
     }
 

@@ -52,7 +52,7 @@ public class InsertionSort {
     }
 
     public static void main(String[] args) {
-        testOptimizeSort();
+        testOrderedArrSorting();
     }
 
     public static void testGenericArr() {
@@ -83,5 +83,38 @@ public class InsertionSort {
         System.out.println("integers2: " + Arrays.toString(integers2));
         InsertionSort.optimizeSort(integers2);
         System.out.println("integers2 sorted: " + Arrays.toString(integers2));
+    }
+
+    /**
+     * 插入排序对于已经接近有序的数组的时间性能接近 O(n)
+     * 做对比测试，对照组：选择排序
+     *
+     * 测试结果：
+     * SelectionSort, n = 10000, 0.088569 s
+     * InsertionSort, n = 10000, 0.101319 s
+     *
+     * SelectionSort, n = 10000, 0.056758 s
+     * InsertionSort, n = 10000, 0.000078 s
+     *
+     * SelectionSort, n = 100000, 8.059562 s
+     * InsertionSort, n = 100000, 14.194851 s
+     *
+     * SelectionSort, n = 100000, 5.193393 s
+     * InsertionSort, n = 100000, 0.000235 s
+     */
+    public static void testOrderedArrSorting() {
+        int[] dataSize = {10000, 100000};
+        for(int n : dataSize) {
+            Integer[] integers = ArrayGenerator.generateRandomIntegerArray(n, n);
+            Integer[] integers1 = Arrays.copyOf(integers, integers.length);
+            SortingHelper.testSort("SelectionSort", integers);
+            SortingHelper.testSort("InsertionSort", integers1);
+
+            Integer[] integers3 = ArrayGenerator.generateOrderedArray(n);
+            Integer[] integers4 = Arrays.copyOf(integers3, integers3.length);
+            SortingHelper.testSort("SelectionSort", integers3);
+            SortingHelper.testSort("InsertionSort", integers4);
+
+        }
     }
 }
