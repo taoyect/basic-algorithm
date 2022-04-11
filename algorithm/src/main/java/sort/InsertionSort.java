@@ -45,6 +45,32 @@ public class InsertionSort {
         }
     }
 
+    /**
+     * 从后往前排
+     * 循环不变量   arr[0...i]是无序的   arr(i...n)是有序的
+     * 把 arr[i] 插入到arr(i...n)中合适的位置
+     * order: asc
+     */
+    public static <T extends Comparable<T>> void oppositeSort(T[] arr) {
+        for(int i = arr.length - 1; i >= 0; i--)
+            for(int j = i; j + 1 < arr.length && arr[j + 1].compareTo(arr[j]) < 0; j++)
+                swap(arr, j, j + 1);
+    }
+
+    /**
+     * 目标：arr[i]
+     * order: asc
+     */
+    public static <T extends Comparable<T>> void oppositeOptimizeSort(T[] arr) {
+        for(int i = arr.length - 1; i >= 0; i--) {
+            T temp = arr[i];
+            int j = i;
+            for(; j + 1 < arr.length && arr[j + 1].compareTo(temp) < 0; j++)
+                arr[j] = arr[j + 1];
+            arr[j] = temp;
+        }
+    }
+
     public static <T> void swap(T[] arr, int a, int b) {
         T temp = arr[a];
         arr[a] = arr[b];
@@ -52,7 +78,7 @@ public class InsertionSort {
     }
 
     public static void main(String[] args) {
-        testOrderedArrSorting();
+        testOppositeOptimizeSort();
     }
 
     public static void testGenericArr() {
@@ -116,5 +142,18 @@ public class InsertionSort {
             SortingHelper.testSort("InsertionSort", integers4);
 
         }
+    }
+
+    public static void testOppositeSort() {
+        Integer[] integers = ArrayGenerator.generateRandomIntegerArray(10, 10);
+        System.out.println(Arrays.toString(integers));
+        InsertionSort.oppositeSort(integers);
+        System.out.println(Arrays.toString(integers));
+    }
+    public static void testOppositeOptimizeSort() {
+        Integer[] integers = ArrayGenerator.generateRandomIntegerArray(10, 10);
+        System.out.println(Arrays.toString(integers));
+        InsertionSort.oppositeOptimizeSort(integers);
+        System.out.println(Arrays.toString(integers));
     }
 }
