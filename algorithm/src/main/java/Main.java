@@ -1,6 +1,4 @@
-import utils.ArrayGenerator;
 
-import java.util.Arrays;
 
 public class Main {
 
@@ -26,9 +24,6 @@ public class Main {
    }
 
     public static void main(String[] args) {
-        Integer[] integers = ArrayGenerator.generateRandomIntegerArray(5, 10);
-        System.out.println(Arrays.toString(integers));
-        sort(integers);
-        System.out.println(Arrays.toString(integers));
+//        System.out.println(Objects.equals(null, null));
     }
 }

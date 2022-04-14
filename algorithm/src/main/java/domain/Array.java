@@ -115,11 +115,7 @@ public class Array<E> {
     }
 
     public boolean contains(E e) {
-        for(int i = 0; i < size; i++) {
-            if(Objects.equals(data[i], e))
-                return true;
-        }
-        return false;
+        return indexOf(e) >= 0;
     }
 
     /**
