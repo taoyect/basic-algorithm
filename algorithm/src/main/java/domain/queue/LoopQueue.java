@@ -9,6 +9,7 @@ public class LoopQueue<E> implements Queue<E> {
     @SuppressWarnings("unchecked")
     public LoopQueue(int capacity) {
         arr = (E[]) new Object[capacity + 1];
+        front = tail = 0;
         size = 0;
     }
 
