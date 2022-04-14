@@ -63,43 +63,6 @@ public class Array<E> {
         size++;
     }
 
-    public E get(int index) {
-        rangeCheckForAdd(index);
-        return data[index];
-    }
-
-    public E getLast() {
-        return get(size - 1);
-    }
-
-    public E getFirst() {
-        return get(0);
-    }
-
-    public void set(int index, E e) {
-        rangeCheckForAdd(index);
-        data[index] = e;
-    }
-
-    public boolean contains(E e) {
-        for(int i = 0; i < size; i++) {
-            if(Objects.equals(data[i], e))
-                return true;
-        }
-        return false;
-    }
-
-    /**
-     * 查找中元素e所在的索引，不存在则返回-1
-     */
-    public int indexOf(E e) {
-        for(int i = 0; i < size; i++) {
-            if(Objects.equals(data[i], e))
-                return i;
-        }
-        return -1;
-    }
-
     /**
      * 从数组中删除index位置的元素，并返回删除的元素
      */
@@ -128,9 +91,46 @@ public class Array<E> {
     }
 
     public void removeElement(E e) {
-        int index = indexOf(e);
+        int index = indexOf(e); //查索引
         if(index != -1)
-            remove(index);
+            remove(index); //删除对应索引位置的元素
+    }
+
+    public void set(int index, E e) {
+        rangeCheckForAdd(index);
+        data[index] = e;
+    }
+
+    public E get(int index) {
+        rangeCheckForAdd(index);
+        return data[index];
+    }
+
+    public E getLast() {
+        return get(size - 1);
+    }
+
+    public E getFirst() {
+        return get(0);
+    }
+
+    public boolean contains(E e) {
+        for(int i = 0; i < size; i++) {
+            if(Objects.equals(data[i], e))
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     * 查找中元素e所在的索引，不存在则返回-1
+     */
+    public int indexOf(E e) {
+        for(int i = 0; i < size; i++) {
+            if(Objects.equals(data[i], e))
+                return i;
+        }
+        return -1;
     }
 
     public void rangeCheckForAdd(int index) {
