@@ -3,11 +3,7 @@ package domain.queue;
 public interface Queue<E> {
     void enqueue(E e);
     E dequeue();
-
-    /**
-     * 查看队列首的元素
-     */
-    E getFront();
+    E getFront(); // 查看队列首的元素
     int getSize();
     boolean isEmpty();
 }
