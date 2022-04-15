@@ -37,6 +37,8 @@ public class SortingHelper {
             SelectionSort.sort(arr);
         } else if("InsertionSort".equals(sortName)) {
             InsertionSort.sort(arr);
+        } else if("OptimizeMergeSort".equals(sortName)) {
+            MergeSort.optimizeSort(arr);
         } else if("MergeSort".equals(sortName)) {
             MergeSort.sort(arr);
         }

@@ -14,28 +14,34 @@ public class InsertionSort {
      * 把 arr[i] 插入到[0, i)中合适的位置
      * order: asc
      */
-    public static <T extends Comparable<T>> void sort(T[] arr) {
-        for(int i = 0; i < arr.length; i++) {
+    public static <T extends Comparable<T>> void rawsSort(T[] arr) {
+        rawsSort(arr, 0, arr.length - 1);
+    }
+
+    public static <T extends Comparable<T>> void rawsSort(T[] arr, int lo, int hi) {
+        for(int i = lo; i <= hi; i++)
+            for(int j = i; j - 1 >= lo && arr[j - 1].compareTo(arr[j]) > 0; j--)
+                swap(arr, j, j - 1);
 //            for(int j = i; j - 1 >= 0; j--) {
 //                if(arr[j - 1].compareTo(arr[j]) > 0) // 或者arr[j].compareTo(arr[j - 1]) < 0
 //                    swap(arr, j - 1, j);
 //                else
 //                    break;
 //            }
-            for(int j = i; j - 1 >= 0 && arr[j - 1].compareTo(arr[j]) > 0; j--) {
-                swap(arr, j - 1, j); //不满足升序，做交换
-            }
-        }
     }
 
     /**
      * 相比于原始的插入排序，swap中的三步操作 优化成了 一步赋值操作
      */
-    public static <T extends Comparable<T>> void optimizeSort(T[] arr) {
-        for(int i = 0; i < arr.length; i++) {
+    public static <T extends Comparable<T>> void sort(T[] arr) {
+        sort(arr, 0, arr.length - 1);
+    }
+
+    public static <T extends Comparable<T>> void sort(T[] arr, int lo, int hi) {
+        for(int i = lo; i <= hi; i++) {
             T temp = arr[i]; //暂存，空间换时间
             int j = i;
-            for(; j - 1 >= 0; j--) {
+            for(; j - 1 >= lo; j--) {
                 if(arr[j - 1].compareTo(temp) > 0)
                     arr[j] = arr[j - 1]; //向后平移一个位置
                 else
@@ -78,7 +84,7 @@ public class InsertionSort {
     }
 
     public static void main(String[] args) {
-        testOppositeOptimizeSort();
+        testOptimizeSort();
     }
 
     public static void testGenericArr() {
@@ -102,12 +108,12 @@ public class InsertionSort {
 
         Integer[] integers1 = Arrays.copyOf(integers, integers.length);
         System.out.println("integers1: " + Arrays.toString(integers1));
-        InsertionSort.sort(integers1);
+        InsertionSort.rawsSort(integers1);
         System.out.println("integers1 sorted: " + Arrays.toString(integers1));
 
         Integer[] integers2 = Arrays.copyOf(integers, integers.length);
         System.out.println("integers2: " + Arrays.toString(integers2));
-        InsertionSort.optimizeSort(integers2);
+        InsertionSort.sort(integers2);
         System.out.println("integers2 sorted: " + Arrays.toString(integers2));
     }
 

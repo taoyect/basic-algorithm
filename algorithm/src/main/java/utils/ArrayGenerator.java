@@ -22,7 +22,7 @@ public class ArrayGenerator {
         Integer[] arr = new Integer[n];
         Random random = new Random();
         for(int i = 0; i < n; i++) {
-            arr[i] = random.nextInt(n);
+            arr[i] = random.nextInt(bound);
         }
         return arr;
     }
