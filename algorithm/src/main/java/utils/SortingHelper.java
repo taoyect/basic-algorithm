@@ -1,9 +1,6 @@
 package utils;
 
-import sort.InsertionSort;
-import sort.MergeSort;
-import sort.SelectionSort;
-import sort.SpaceOptimizedMergeSort;
+import sort.*;
 
 public class SortingHelper {
     private SortingHelper(){}
@@ -46,6 +43,12 @@ public class SortingHelper {
             SpaceOptimizedMergeSort.sort(arr);
         } else if("MergeSortBU".equals(sortName)) {
             MergeSort.sortBU(arr);
+        } else if("BubbleSort".equals(sortName)) {
+            BubbleSort.sort(arr);
+        } else if("OppositeBubbleSort".equals(sortName)) {
+            BubbleSort.oppositeSort(arr);
+        } else if("ShellSort".equals(sortName)) {
+            ShellSort.sort(arr);
         }
 
         long end = System.nanoTime();

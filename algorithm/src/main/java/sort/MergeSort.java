@@ -6,7 +6,7 @@ import utils.SortingHelper;
 import java.util.Arrays;
 
 /**
- * O
+ * O(nlogn)
  */
 public class MergeSort {
     public static final int N = 15;
