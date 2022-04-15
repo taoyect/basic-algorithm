@@ -3,6 +3,7 @@ package utils;
 import sort.InsertionSort;
 import sort.MergeSort;
 import sort.SelectionSort;
+import sort.SpaceOptimizedMergeSort;
 
 public class SortingHelper {
     private SortingHelper(){}
@@ -41,6 +42,10 @@ public class SortingHelper {
             MergeSort.optimizeSort(arr);
         } else if("MergeSort".equals(sortName)) {
             MergeSort.sort(arr);
+        } else if("SpaceOptimizedMergeSort".equals(sortName)) {
+            SpaceOptimizedMergeSort.sort(arr);
+        } else if("MergeSortBU".equals(sortName)) {
+            MergeSort.sortBU(arr);
         }
 
         long end = System.nanoTime();
