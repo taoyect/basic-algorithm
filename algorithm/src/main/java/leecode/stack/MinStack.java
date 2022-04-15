@@ -1,15 +1,15 @@
 package leecode.stack;
 
+import java.util.ArrayDeque;
 import java.util.Objects;
-import java.util.Stack;
 
 class MinStack {
-    private Stack<Integer> stack;
-    private Stack<Integer> helper;
+    private ArrayDeque<Integer> stack;
+    private ArrayDeque<Integer> helper;
 
     public MinStack() {
-        stack = new Stack<>();
-        helper = new Stack<>();
+        stack = new ArrayDeque<>();
+        helper = new ArrayDeque<>();
     }
 
     public void push(int val) {
