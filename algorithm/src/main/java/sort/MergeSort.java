@@ -5,6 +5,9 @@ import utils.SortingHelper;
 
 import java.util.Arrays;
 
+/**
+ * O
+ */
 public class MergeSort {
 
     public static <T extends Comparable<T>> void sort(T[] arr) {
