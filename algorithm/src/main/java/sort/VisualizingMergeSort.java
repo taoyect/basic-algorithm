@@ -26,6 +26,12 @@ public class VisualizingMergeSort {
         System.out.printf("merge arr[%d, %d] and arr[%d, %d]%n", lo, mid, mid + 1, hi);
 
         merge(arr, lo, mid, hi);
+
+        // 打印 merge 后的数组
+        System.out.print(depthString);
+        System.out.printf("after mergesort arr[%d, %d] :", lo, hi);
+        for(T t: arr) System.out.print(t + " ");
+        System.out.println();
     }
 
     private static <T extends Comparable<T>> void merge(T[] arr, int lo, int mid, int hi) {
