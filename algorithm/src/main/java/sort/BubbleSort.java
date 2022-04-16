@@ -1,7 +1,6 @@
 package sort;
 
 import utils.ArrayGenerator;
-import utils.SortingHelper;
 
 import java.util.Arrays;
 
@@ -19,7 +18,9 @@ public class BubbleSort {
      *
      *    i:轮数，也表示已经有多少个元素排好序了
      */
-    public static <T extends Comparable<T>> void sort(T[] arr) {
+    public static <T extends Comparable<T>> void sort1(T[] arr) {
+        //for(int i = 0; i < arr.length; i++) 也可以
+        // 最后一轮 i = arr.length - 1, 只有一个元素，可以直接不进行bubble的过程，所以i < arr.length - 1也可以
         for(int i = 0; i < arr.length - 1; i++)
             for(int j = 0; j + 1 < arr.length - i; j++)
                 if(arr[j].compareTo(arr[j + 1]) > 0)
@@ -72,9 +73,7 @@ public class BubbleSort {
     }
 
     public static void main(String[] args) {
-        int n = 10000;
-        Integer[] integers = ArrayGenerator.generateRandomIntegerArray(n, n);
-        SortingHelper.testSort("OppositeBubbleSort", integers);
+        testOppositeSort();
     }
 
     public static void testOppositeSort() {
