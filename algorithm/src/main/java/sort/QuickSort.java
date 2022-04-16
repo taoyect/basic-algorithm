@@ -1,6 +1,7 @@
 package sort;
 
 import utils.ArrayGenerator;
+import utils.SortingHelper;
 
 import java.util.Arrays;
 
@@ -41,15 +42,13 @@ public class QuickSort {
      *            j     i
      * ....
      */
+    //arr[lo+1...j] < flag, arr[j+1...i-1] > v
     public static <T extends Comparable<T>> int partition(T[] arr, int lo, int hi) {
         T flag = arr[lo];
         int j = lo;
-        for(int i = lo + 1; i <= hi; i++) { //一直遍历到结尾
-            if(arr[i].compareTo(flag) < 0) {
-                j++;
-                swap(arr, j, i);
-            }
-        }
+        for(int i = lo + 1; i <= hi; i++) //一直遍历到结尾
+            if(arr[i].compareTo(flag) < 0)
+                swap(arr, ++j, i);
         swap(arr, lo, j);
         return j;
     }
@@ -70,15 +69,21 @@ public class QuickSort {
     }
 
     public static void main(String[] args) {
-        Integer[] integers = ArrayGenerator.generateRandomIntegerArray(10, 10);
-        System.out.println(Arrays.toString(integers));
-        QuickSort.sort(integers);
-        System.out.println(Arrays.toString(integers));
+        int n = 100000;
+        Integer[] integers = ArrayGenerator.generateRandomIntegerArray(n, n);
+        SortingHelper.testSort("QuickSort", integers);
     }
 
     public static <T> void swap(T[] arr, int a, int b) {
         T temp = arr[a];
         arr[a] = arr[b];
         arr[b] = temp;
+    }
+
+    public static void normalTest() {
+        Integer[] integers = ArrayGenerator.generateRandomIntegerArray(10, 10);
+        System.out.println(Arrays.toString(integers));
+        QuickSort.sort(integers);
+        System.out.println(Arrays.toString(integers));
     }
 }

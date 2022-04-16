@@ -49,6 +49,8 @@ public class SortingHelper {
             BubbleSort.oppositeSort(arr);
         } else if("ShellSort".equals(sortName)) {
             ShellSort.sort(arr);
+        } else if("QuickSort".equals(sortName)) {
+            QuickSort.sort(arr);
         }
 
         long end = System.nanoTime();
