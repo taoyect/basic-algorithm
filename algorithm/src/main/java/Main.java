@@ -1,48 +1,41 @@
-import utils.ArrayGenerator;
-
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
-
-  public static <T extends Comparable<T>> void sort(T[] arr) {
-      sort(arr, 0, arr.length - 1);
-  }
-
-  public static <T extends Comparable<T>> void sort(T[] arr, int lo, int hi) {
-      if(lo >= hi) return;
-      int mid = lo + (hi - lo) / 2;
-      sort(arr, lo, mid);
-      sort(arr, mid + 1, hi);
-      merge(arr, lo, mid, hi);
-  }
-
-  public static <T extends Comparable<T>> void merge(T[] arr, int lo, int mid, int hi) {
-      T[] tempArr = Arrays.copyOfRange(arr, lo, hi + 1);
-      int i = lo, j = mid + 1;
-      for(int k = lo; k <= hi; k++) {
-          if(i > mid) {
-              arr[k] = tempArr[j++ - lo];
-          } else if(j > hi) {
-              arr[k] = tempArr[i++ - lo];
-          } else if(tempArr[i - lo].compareTo(tempArr[j - lo]) < 0) {
-              arr[k] = tempArr[i++ - lo];
-          } else {
-              arr[k] = tempArr[j++ - lo];
-          }
-      }
-
-  }
-
-   public static <T> void swap(T[] arr, int a, int b) {
-       T temp = arr[a];
-       arr[a] = arr[b];
-       arr[b] = temp;
-   }
+    public static <T extends Comparable<T>> List<T> sort(List<T> list1, List<T> list2) {
+        int length = list1.size() + list2.size();
+        ArrayList<T> res = new ArrayList<>();
+        int i = 0, j = 0;
+        for(int k = 0; k < length; k++) {
+            if(i >= list1.size()) {
+                res.add(list2.get(j++));
+            } else if(j >= list2.size()) {
+                res.add(list1.get(i++));
+            } else if(list1.get(i).compareTo(list2.get(j)) < 0) {
+                res.add(list1.get(i++));
+            } else {
+                res.add(list2.get(j++));
+            }
+        }
+        return res;
+    }
 
     public static void main(String[] args) {
-        Integer[] integers = ArrayGenerator.generateRandomIntegerArray(10, 10);
-        sort(integers);
-
+        ArrayList<Integer> integers1 = new ArrayList<>();
+        integers1.add(4);
+        integers1.add(6);
+        integers1.add(8);
+        ArrayList<Integer> integers2 = new ArrayList<>();
+        integers2.add(3);
+        integers2.add(5);
+        integers2.add(7);
+        List<Integer> list = sort(integers1, integers2);
+        System.out.println(list);
     }
+
+
+
+
+
 }
