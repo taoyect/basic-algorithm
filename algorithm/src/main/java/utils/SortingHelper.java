@@ -51,6 +51,10 @@ public class SortingHelper {
             ShellSort.sort(arr);
         } else if("QuickSort".equals(sortName)) {
             QuickSort.sort(arr);
+        } else if("QuickSort2Ways".equals(sortName)) {
+            QuickSort.sort2Ways(arr);
+        } else if("QuickSort3Ways".equals(sortName)) {
+            QuickSort.sort3Ways(arr);
         }
 
         long end = System.nanoTime();
