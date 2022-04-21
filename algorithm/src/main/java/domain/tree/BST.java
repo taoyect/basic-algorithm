@@ -66,11 +66,31 @@ public class BST<E extends Comparable<E>> {
     //前序遍历以node为根的二分搜索树，递归方式
     private void preOrder(Node node) {
         if(node == null) return;
-        //遍历需要做的操作，此处仅打印一下节点的值
-        System.out.print(node.e + " ");
-
+        System.out.print(node.e + " ");//访问当前节点做操作
         preOrder(node.left);
         preOrder(node.right);
+    }
+
+    public void inOrder() {
+        inOrder(root);
+    }
+    //中序遍历以node为根的二分搜索树，递归方式
+    private void inOrder(Node node) {
+        if(node == null) return;
+        inOrder(node.left);
+        System.out.print(node.e + " ");//访问当前节点做操作
+        inOrder(node.right);
+    }
+
+    public void postOrder() {
+        postOrder(root);
+    }
+    //后序遍历以node为根的二分搜索树，递归方式
+    private void postOrder(Node node) {
+        if(node == null) return;
+        postOrder(node.left);
+        postOrder(node.right);
+        System.out.print(node.e + " ");//访问当前节点做操作
     }
 
     @Override
@@ -86,8 +106,8 @@ public class BST<E extends Comparable<E>> {
             return;
         }
         res.append(generateDepthString(depth)).append(node.e).append("\n");
-        generateBSTString(node.left,depth+1,res);
-        generateBSTString(node.right,depth+1,res);
+        generateBSTString(node.left,depth + 1, res);
+        generateBSTString(node.right,depth + 1, res);
     }
 
     private String generateDepthString(int depth) {
