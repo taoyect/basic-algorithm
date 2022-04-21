@@ -73,7 +73,7 @@ public class BinarySearch {
         return u;
     }
 
-    //  < target的最大值  e.g. 查找小于85分的最大值
+    //  < target的最大值索引  e.g. 查找小于85分的最大值的索引
     public static <T extends Comparable<T>> int lower(T[] arr, T target) {
         int lo = -1, hi = arr.length - 1;
         while(lo < hi) {
@@ -87,13 +87,72 @@ public class BinarySearch {
         return lo;
     }
 
+    // < target   返回最大值索引
+    // == target  返回最小索引
+    public static <T extends Comparable<T>> int lowerFloor(T[] arr, T target) {
+        int lower = lower(arr, target);
+        if(lower + 1 < arr.length && arr[lower + 1] == target)
+            return lower + 1;
+        return lower;
+    }
+
+    // < target  返回最大值索引
+    // == target 返回最大索引
+    public static <T extends Comparable<T>> int upperFloor(T[] arr, T target) {
+        int lower = lower(arr, target);
+        if(lower + 1 < arr.length && arr[lower + 1] == target) {
+            int k = lower + 2;
+            while(k < arr.length && arr[k] == target)
+                k++;
+            return k - 1;
+        }
+        return lower;
+    }
+
+    // <= target 最大索引
+    public static <E extends Comparable<E>> int upper_floor(E[] data, E target){
+        int l = -1, r = data.length - 1;
+        // 在 data[l, r] 中寻找解
+        while(l < r){
+            int mid = l + (r - l + 1) / 2;
+            // 请同学们根据下面的搜索范围的调整逻辑思考：
+            // 为什么 upper_floor 同样需要使用上取整的方式来计算 mid?
+
+            // 在 lower 中，这里是 data[mid].compareTo(target) < 0
+            // 但是，对于 upper_floor 来说，在 data[mid] == target 的时候，有可能是解
+            // 所以在等于的情况下，不能排除掉 data[mid] 的值，我们的搜索空间的变化，同样是 l = mid
+            if(data[mid].compareTo(target) <= 0)
+                l = mid;
+            else
+                r = mid - 1;
+        }
+        return l;
+    }
+
     public static void main(String[] args) {
-        testLowerCeil();
+        testLowerFloor();
+        testUpperFloor();
     }
     public static void testLower() {
         Integer[] arr = {1, 1, 3, 3 ,5, 5};
         for(int i = 0; i <= 6; i++)
             System.out.print(lower(arr, i) + " ");
+        System.out.println();
+    }
+
+    public static void testLowerFloor() {
+        Integer[] arr = {1, 1, 3, 3, 5, 5};
+
+        System.out.print("lower_floor : ");
+        for(int i = 0; i <= 6; i ++)
+            System.out.print(BinarySearch.lowerFloor(arr, i) + " ");
+        System.out.println();
+    }
+    public static void testUpperFloor() {
+        Integer[] arr = {1, 1, 3, 3, 5, 5};
+        System.out.print("upper_floor : ");
+        for(int i = 0; i <= 6; i ++)
+            System.out.print(BinarySearch.upperFloor(arr, i) + " ");
         System.out.println();
     }
 
