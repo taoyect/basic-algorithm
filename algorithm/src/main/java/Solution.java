@@ -5,23 +5,27 @@ public class Solution {
         return find(nums, 0, nums.length - 1, nums.length - k + 1 - 1);
     }
 
-    public int find(int[] arr, int lo, int hi, int index) {
-        if(lo > hi)
-            return Integer.MIN_VALUE;
-
-        int p = partition(arr, lo, hi);
-
-        if(index == p)
-            return arr[p];
-        else if(index < p)
-            return find(arr, lo, p - 1, index);
-        else
-            return find(arr, p + 1, hi, index);
+    public int find(int[] arr, int lo, int hi, int k) {
+        if(lo > hi) return Integer.MIN_VALUE;
+        while(lo <= hi) {
+            int p = partition(arr, lo, hi);
+            if(p == k) return arr[p];
+            if(p < k) lo = p + 1;
+            else hi = p - 1;
+        }
+        return Integer.MIN_VALUE;
     }
 
+    public static void main(String[] args) {
+        int[] nums = {3,2,1,5,6,4};
+        int kthLargest = new Solution().findKthLargest(nums, 1);
+        System.out.println(kthLargest);
+    }
+
+    //二路快排的partition
     public int partition(int[] arr, int lo, int hi) {
         int randomIndex = (new Random()).nextInt(hi - lo + 1) + lo;
-        swap(arr, randomIndex, lo);
+        swap(arr, lo, randomIndex);
 
         int i = lo + 1, j = hi;
         while(true) {
@@ -38,11 +42,5 @@ public class Solution {
         int temp = arr[a];
         arr[a] = arr[b];
         arr[b] = temp;
-    }
-
-    public static void main(String[] args) {
-        int[] arr = {3, 2, 5, 6, 1};
-        int kthLargest = new Solution().findKthLargest(arr, 2);
-        System.out.println(kthLargest);
     }
 }

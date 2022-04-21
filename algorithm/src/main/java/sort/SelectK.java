@@ -10,7 +10,18 @@ public class SelectK {
         return findKthMin(arr, 0, arr.length - 1, arr.length - k + 1 - 1);
     }
 
+    //迭代版本
     public static <T extends Comparable<T>> T findKthMin(T[] arr, int lo, int hi, int index) {
+        while(lo <= hi) {
+            int p = partition(arr, lo, hi);
+            if(index == p) return arr[p];
+            if(index < p) hi = p - 1;
+            else lo = p + 1;
+        }
+        return null;
+    }
+    //递归版本 recursive
+    public static <T extends Comparable<T>> T findKthMinR(T[] arr, int lo, int hi, int index) {
         if(lo > hi) return null;
 
         int p = partition(arr, lo, hi);
