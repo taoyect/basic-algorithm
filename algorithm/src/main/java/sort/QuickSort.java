@@ -54,18 +54,19 @@ public class QuickSort {
      * arr[lo+1,i-1] <= flag, arr[j+1, hi] >= flag
      */
     public static <T extends Comparable<T>> int partition2(T[] arr, int lo, int hi) {
-        //通过随机处理，避免在数组近乎或完全有序的极端情况下，算法退化成O(n^2)，且递归深度为O(n)，导致栈溢出
+        //通过随机处理，避免在数组近乎或完全有序的极端情况下，算法退化成O(n^2)，
+        // 且递归深度为O(n)，导致栈溢出
         int randomIndex = random.nextInt(hi - lo + 1) + lo;
         swap(arr, randomIndex, lo);
 
         int i = lo + 1, j = hi;
         while(true) {
-            while(i <= j && arr[i].compareTo(arr[lo]) < 0) i++;
-            while(j >= i && arr[j].compareTo(arr[lo]) > 0) j--;
+            while(i <= j && arr[i].compareTo(arr[lo]) < 0) i++; //此处不能改为<=0, 否则重复元素数组排序性能差
+            while(j >= i && arr[j].compareTo(arr[lo]) > 0) j--; //此处不能改为>=0, 否则重复元素数组排序性能差
             if(i >= j) break;
             swap(arr, i++, j--);
         }
-        swap(arr, lo, j);
+        swap(arr, lo, j); //因为j是从后往前遍历，最终i==j或者j落在 <v 的区间末尾
         return j;
     }
 /////////////////////////////////////////////////////////////////////////////////////////////
