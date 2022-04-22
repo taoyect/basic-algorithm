@@ -1,5 +1,7 @@
 package domain.tree;
 
+import domain.stack.ArrayStack2;
+
 public class BST<E extends Comparable<E>> {
     private class Node {
         private E e;
@@ -71,6 +73,21 @@ public class BST<E extends Comparable<E>> {
         preOrder(node.right);
     }
 
+    //前序遍历以node为根的二分搜索树，非递归方式
+    public void preOrderNR() {
+        if(root == null) return;
+        ArrayStack2<Node> stack = new ArrayStack2<>();
+        stack.push(root);
+        while(!stack.isEmpty()) {
+            Node current = stack.pop();
+            System.out.print(current.e + " ");
+            if(current.right != null)
+                stack.push(current.right);
+            if(current.left != null)
+                stack.push(current.left);
+        }
+    }
+
     public void inOrder() {
         inOrder(root);
     }
@@ -80,6 +97,21 @@ public class BST<E extends Comparable<E>> {
         inOrder(node.left);
         System.out.print(node.e + " ");//访问当前节点做操作
         inOrder(node.right);
+    }
+
+    public void inOrderNR() {
+        if(root == null) return;
+        ArrayStack2<Node> stack = new ArrayStack2<>();
+        Node current = root;
+        while(current != null || !stack.isEmpty()) {
+            while(current != null) {
+                stack.push(current);
+                current = current.left;
+            }
+            current = stack.pop();
+            System.out.print(current.e + " ");
+            current = current.right;
+        }
     }
 
     public void postOrder() {
