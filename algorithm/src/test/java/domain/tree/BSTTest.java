@@ -19,6 +19,11 @@ public class BSTTest {
         System.out.println(bst);
         bst.preOrder(); //5 3 2 4 7 6 8
     }
+    /**
+     *          5
+     *       3    7
+     *     2  4  6  8
+     */
     @Test
     public void testInOrder() {
         BST<Integer> bst = new BST<>();
@@ -26,6 +31,11 @@ public class BSTTest {
         Arrays.stream(nums).forEach(bst::add);
         bst.inOrder(); //2 3 4 5 6 7 8
     }
+    /**
+     *          5
+     *       3    7
+     *     2  4  6  8
+     */
     @Test
     public void testPostOrder() {
         BST<Integer> bst = new BST<>();
