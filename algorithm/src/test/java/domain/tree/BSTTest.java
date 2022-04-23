@@ -58,4 +58,51 @@ public class BSTTest {
         Arrays.stream(nums).forEach(bst::add);
         bst.postOrder(); //2 4 3 6 8 7 5
     }
+    /**
+     *          5
+     *       3    7
+     *     2  4  6  8
+     */
+    @Test
+    public void testLevelOrder() {
+        BST<Integer> bst = new BST<>();
+        int[] nums = {5, 3, 7, 6, 8, 4, 2};
+        Arrays.stream(nums).forEach(bst::add);
+        bst.levelOrder(); //5 3 7 2 4 6 8
+    }
+    @Test
+    public void testMinimum() {
+        BST<Integer> bst = new BST<>();
+        int[] nums = {5, 3, 7, 6, 8, 4, 2};
+        Arrays.stream(nums).forEach(bst::add);
+        System.out.println(bst.minimum());
+        System.out.println(bst.minimumNR());
+    }
+
+    @Test
+    public void testMaximum() {
+        BST<Integer> bst = new BST<>();
+        int[] nums = {5, 3, 7, 6, 8, 4, 2};
+        Arrays.stream(nums).forEach(bst::add);
+        System.out.println(bst.maximum());
+        System.out.println(bst.maximumNR());
+    }
+    @Test
+    public void testRemoveMin() {
+        BST<Integer> bst = new BST<>();
+        int[] nums = {5, 3, 7, 6, 8, 4, 2};
+        Arrays.stream(nums).forEach(bst::add);
+        System.out.println(bst.removeMin());
+        System.out.println(bst.removeMin());
+        System.out.println(bst);
+    }
+    @Test
+    public void testRemoveMax() {
+        BST<Integer> bst = new BST<>();
+        int[] nums = {5, 3, 7, 6, 8, 4, 2};
+        Arrays.stream(nums).forEach(bst::add);
+        System.out.println(bst.removeMax());
+        System.out.println(bst.removeMax());
+        System.out.println(bst);
+    }
 }

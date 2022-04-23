@@ -2,6 +2,9 @@ package domain.tree;
 
 import domain.stack.ArrayStack2;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class BST<E extends Comparable<E>> {
     private class Node {
         private E e;
@@ -43,7 +46,6 @@ public class BST<E extends Comparable<E>> {
             node.left = add(node.left, e);
         else if(e.compareTo(node.e) > 0)
             node.right = add(node.right, e);
-
         return node;
     }
 
@@ -123,6 +125,103 @@ public class BST<E extends Comparable<E>> {
         postOrder(node.left);
         postOrder(node.right);
         System.out.print(node.e + " ");//访问当前节点做操作
+    }
+
+    //层序遍历，广度优先遍历
+    public void levelOrder() {
+        Queue<Node> q = new LinkedList<>();
+        q.add(root);
+        while(!q.isEmpty()) {
+            Node current = q.remove();
+            System.out.print(current.e + " ");
+            if(current.left != null)
+                q.add(current.left);
+            if(current.right != null)
+                q.add(current.right);
+        }
+    }
+
+    public E minimum() {
+        if(size == 0)
+            throw new IllegalArgumentException("BST is empty!");
+        return minimum(root);
+    }
+
+    private E minimum(Node node) {
+      if(node == null) return null;
+      if(node.left != null)
+          return minimum(node.left);
+      return node.e;
+    }
+
+    public E minimumNR() {
+        if(size == 0)
+            throw new IllegalArgumentException("BST is empty!");
+        if(root == null) return null;
+        Node current = root;
+        while(current.left != null)
+            current = current.left;
+        return current.e;
+    }
+
+    public E maximum() {
+        if(size == 0)
+            throw new IllegalArgumentException("BST is empty!");
+        return maximum(root);
+    }
+
+    private E maximum(Node node) {
+        if(node == null) return null;
+        if(node.right != null)
+            return maximum(node.right);
+        return node.e;
+    }
+
+    public E maximumNR() {
+        if(size == 0)
+            throw new IllegalArgumentException("BST is empty!");
+        if(root == null) return null;
+        Node current = root;
+        while(current.right != null)
+            current = current.right;
+        return current.e;
+    }
+
+    //从二分搜索树中删除最小值所在的节点，返回最小值
+    public E removeMin() {
+        E ret = minimum();
+        root = removeMin(root);
+        return ret;
+    }
+    //删除以node为根的二分搜索树的最小节点，返回删除节点后新的二分搜索树的根
+    private Node removeMin(Node node) {
+        if(node == null) return null;
+        if(node.left == null) {
+            Node rightNode = node.right;
+            node.right = null;
+            size--;
+            return rightNode;
+        }
+        node.left = removeMin(node.left);
+        return node;
+    }
+
+    public E removeMax() {
+        E ret = maximum();
+        root = removeMax(root);
+        return ret;
+    }
+
+    private Node removeMax(Node node) {
+        if(node == null) return null;
+        if(node.right == null) {
+            Node leftNode = node.left;
+            node.left = null;
+            size--;
+            return leftNode;
+        }
+        node.right = removeMax(node.right);
+        return node;
     }
 
     @Override
