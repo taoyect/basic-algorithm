@@ -1,36 +1,36 @@
 import utils.ArrayGenerator;
 
 import java.util.Arrays;
+import java.util.Random;
 
 public class Main {
-
-   public static <T extends Comparable<T>> void sort(T[] arr) {
-    sort(arr, 0, arr.length - 1);
+   public static <T extends Comparable<T>> T findKthMin(T[] arr, int k) {
+       return findKthMin(arr, 0, arr.length - 1, k - 1);
    }
 
-   public static <T extends Comparable<T>> void sort(T[] arr, int lo, int hi) {
-       if(lo >= hi) return;
-       int mid = lo + (hi - lo) / 2;
-       sort(arr, lo, mid);
-       sort(arr, mid + 1, hi);
-       if(arr[mid].compareTo(arr[mid + 1]) > 0)
-           merge(arr, lo, mid, hi);
+   public static <T extends Comparable<T>> T findKthMin(T[] arr, int lo, int hi, int index) {
+        if(lo > hi) return null;
+        int p = partition(arr, lo, hi);
+        if(p == index) return arr[p];
+        if(p > index)
+            return findKthMin(arr, lo, p - 1, index);
+        return findKthMin(arr, p + 1, hi, index);
    }
 
-   public static <T extends Comparable<T>> void merge(T[] arr, int lo, int mid, int hi) {
-       T[] tempArr = Arrays.copyOfRange(arr, lo, hi + 1);
-       int i = lo, j = mid + 1;
-       for(int k = lo; k <= hi; k++) {
-           if(i > mid)
-               arr[k] = tempArr[j++ - lo];
-           else if(j > hi)
-               arr[k] = tempArr[i++ - lo];
-           else if(tempArr[i - lo].compareTo(tempArr[j - lo]) < 0)
-               arr[k] = tempArr[i++ - lo];
-           else
-               arr[k] = tempArr[j++ - lo];
+   public static <T extends Comparable<T>> int partition(T[] arr, int lo, int hi) {
+       int randomIndex = (new Random()).nextInt(hi - lo + 1) + lo;
+       swap(arr, randomIndex, lo);
+       int i = lo + 1, j = hi;
+       while(true) {
+           while(i <= j && arr[i].compareTo(arr[lo]) < 0) i++;
+           while(j >= i && arr[j].compareTo(arr[lo]) > 0) j--;
+           if(i > j) break;
+           swap(arr, i++, j--);
        }
+       swap(arr, lo, j);
+       return j;
    }
+
 
    public static <T> void swap(T[] arr, int a, int b) {
        T temp = arr[a];
@@ -43,7 +43,7 @@ public class Main {
     public static void main(String[] args) {
         Integer[] integers = ArrayGenerator.generateRandomIntegerArray(7, 15);
         System.out.println(Arrays.toString(integers));
-        sort(integers);
+        System.out.println( findKthMin(integers, 3));
         System.out.println(Arrays.toString(integers));
     }
 
