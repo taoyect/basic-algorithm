@@ -1,6 +1,3 @@
-import utils.ArrayGenerator;
-
-import java.util.Arrays;
 import java.util.Random;
 
 public class Main {
@@ -41,10 +38,7 @@ public class Main {
 
 
     public static void main(String[] args) {
-        Integer[] integers = ArrayGenerator.generateRandomIntegerArray(7, 15);
-        System.out.println(Arrays.toString(integers));
-        System.out.println( findKthMin(integers, 3));
-        System.out.println(Arrays.toString(integers));
+        System.out.println(Integer.toHexString(0x23 & 0x34));
     }
 
 
