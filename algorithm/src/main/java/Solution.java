@@ -8,7 +8,7 @@ public class Solution {
     public static int countDuplicates(int[] arr) {
         HashSet<Integer> duplicateNums = new HashSet<>();
         for(int i = 0; i < arr.length; i++) {
-            while (arr[i] != (i + 1) && arr[arr[i] - 1] != arr[i])
+            if (arr[i] != (i + 1) && arr[arr[i] - 1] != arr[i])
                 swap(arr, i, arr[i] - 1);
         }
         for(int i = 0; i < arr.length; i++) {

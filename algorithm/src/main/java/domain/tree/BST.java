@@ -12,17 +12,17 @@ public class BST<E extends Comparable<E>> {
 
         public Node(E e) {
             this.e = e;
-            left = right = null;
+//            left = right = null;
         }
     }
 
     private Node root;
     private int size;
 
-    public BST() {
-        root = null;
-        size = 0;
-    }
+//    public BST() {
+//        root = null;
+//        size = 0;
+//    }
 
     public int size() {
         return size;
@@ -47,6 +47,54 @@ public class BST<E extends Comparable<E>> {
         else if(e.compareTo(node.e) > 0)
             node.right = add(node.right, e);
         return node;
+    }
+
+    // 向二分搜索树中添加新的元素e，非递归写法
+    public void add2(E e){
+
+        // 对二分搜索树是空的情况特殊处理
+        // 此时，直接让 root 指向新的节点即可
+        if(root == null){
+            root = new Node(e);
+            size ++;
+            return;
+        }
+
+        // 用 p 来跟踪待插入节点的上一个节点
+        // p 的作用相当于链表插入节点时，pre 的作用
+        Node p = root;
+        while(p != null){
+
+            // 如果待插入的值小于当前 p 节点的值
+            // 说明新插入的值要放在 p 的左子树
+            if(e.compareTo(p.e) < 0){
+                // 如果 p 的左子树为空，则在 p.left 上放入新的节点
+                if(p.left == null){
+                    p.left = new Node(e);
+                    size ++;
+                    return; // 注意这里直接 return
+                }
+
+                // 否则 p = p.left
+                p = p.left;
+            }
+            // 如果待插入的值大于当前 p 节点的值
+            // 说明新插入的值要放在 p 的右子树
+            else if(e.compareTo(p.e) > 0){
+                // 如果 p 的右子树为空，则在 p.right 上放入新的节点
+                if(p.right == null){
+                    p.right = new Node(e);
+                    size ++;
+                    return; // 注意这里直接 return
+                }
+
+                // 否则 p = p.right
+                p = p.right;
+            }
+            // 如果待插入的值等于当前 p 节点的值，说明二分搜索树中已经有这个值了
+            // 直接 return
+            else return;
+        }
     }
 
     public boolean contains(E e) {
