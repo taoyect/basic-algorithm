@@ -1,44 +1,40 @@
-import java.util.Random;
+
 
 public class Main {
-   public static <T extends Comparable<T>> T findKthMin(T[] arr, int k) {
-       return findKthMin(arr, 0, arr.length - 1, k - 1);
-   }
 
-   public static <T extends Comparable<T>> T findKthMin(T[] arr, int lo, int hi, int index) {
-        if(lo > hi) return null;
-        int p = partition(arr, lo, hi);
-        if(p == index) return arr[p];
-        if(p > index)
-            return findKthMin(arr, lo, p - 1, index);
-        return findKthMin(arr, p + 1, hi, index);
-   }
+    public static <T extends Comparable<T>> int upper(T[] arr, T target) {
+        if(target == null) return -1;
+        int lo = 0, hi = arr.length;
+        while(lo < hi) {
+            int mid = lo + (hi - lo + 1) / 2;
+            if(arr[mid].compareTo(target) <= 0)
+                lo = mid + 1;
+            else
+                hi = mid;
+        }
+        return hi;
+    }
 
-   public static <T extends Comparable<T>> int partition(T[] arr, int lo, int hi) {
-       int randomIndex = (new Random()).nextInt(hi - lo + 1) + lo;
-       swap(arr, randomIndex, lo);
-       int i = lo + 1, j = hi;
-       while(true) {
-           while(i <= j && arr[i].compareTo(arr[lo]) < 0) i++;
-           while(j >= i && arr[j].compareTo(arr[lo]) > 0) j--;
-           if(i > j) break;
-           swap(arr, i++, j--);
-       }
-       swap(arr, lo, j);
-       return j;
-   }
+    public static <T extends Comparable<T>> int search(T[] arr, int lo, int hi, T target) {
+        if(lo > hi) return -1;
+        int mid = lo + (hi - lo) / 2;
+        if(arr[mid].compareTo(target) > 0)
+            return search(arr, lo, mid - 1, target);
+        else if(arr[mid].compareTo(target) < 0)
+            return search(arr, mid + 1, hi, target);
+        return mid;
+    }
 
-
-   public static <T> void swap(T[] arr, int a, int b) {
-       T temp = arr[a];
-       arr[a] = arr[b];
-       arr[b] = temp;
-   }
 
 
 
     public static void main(String[] args) {
-        System.out.println(Integer.toHexString(0x23 & 0x34));
+//        Integer[] integers = ArrayGenerator.generateRandomIntegerArray(7, 10);
+//        QuickSort.sort3Ways(integers);
+//        System.out.println(Arrays.toString(integers));
+        Integer[] integers1 = {0, 0, 0, 2, 2, 7, 8};
+        System.out.println(upper(integers1, 3));
+//        System.out.println(Arrays.toString(integers));
     }
 
 

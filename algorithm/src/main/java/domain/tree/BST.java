@@ -2,8 +2,7 @@ package domain.tree;
 
 import domain.stack.ArrayStack2;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 public class BST<E extends Comparable<E>> {
     private class Node {
@@ -49,51 +48,19 @@ public class BST<E extends Comparable<E>> {
         return node;
     }
 
-    // 向二分搜索树中添加新的元素e，非递归写法
-    public void add2(E e){
-
-        // 对二分搜索树是空的情况特殊处理
-        // 此时，直接让 root 指向新的节点即可
-        if(root == null){
-            root = new Node(e);
-            size ++;
-            return;
-        }
-
-        // 用 p 来跟踪待插入节点的上一个节点
-        // p 的作用相当于链表插入节点时，pre 的作用
+    public void addNR(E e) {
+        if(root == null) { root = new Node(e);  size++; return; }
         Node p = root;
-        while(p != null){
-
-            // 如果待插入的值小于当前 p 节点的值
-            // 说明新插入的值要放在 p 的左子树
-            if(e.compareTo(p.e) < 0){
-                // 如果 p 的左子树为空，则在 p.left 上放入新的节点
-                if(p.left == null){
-                    p.left = new Node(e);
-                    size ++;
-                    return; // 注意这里直接 return
-                }
-
-                // 否则 p = p.left
+        while(p != null) {
+            if(e.compareTo(p.e) < 0) {
+                if(p.left == null) { p.left = new Node(e); size++; return; }
                 p = p.left;
-            }
-            // 如果待插入的值大于当前 p 节点的值
-            // 说明新插入的值要放在 p 的右子树
-            else if(e.compareTo(p.e) > 0){
-                // 如果 p 的右子树为空，则在 p.right 上放入新的节点
-                if(p.right == null){
-                    p.right = new Node(e);
-                    size ++;
-                    return; // 注意这里直接 return
-                }
-
-                // 否则 p = p.right
+            } else if(e.compareTo(p.e) > 0){
+                if(p.right == null) { p.right = new Node(e); size++; return; }
                 p = p.right;
+            } else {
+                return;
             }
-            // 如果待插入的值等于当前 p 节点的值，说明二分搜索树中已经有这个值了
-            // 直接 return
-            else return;
         }
     }
 
@@ -174,18 +141,36 @@ public class BST<E extends Comparable<E>> {
         postOrder(node.right);
         System.out.print(node.e + " ");//访问当前节点做操作
     }
+    //层序遍历，广度优先遍历
+    public List<List<E>> levelOrder() {
+        List<List<E>> list = new ArrayList<>();
+        if(root == null) return list;
+        Queue<Node> q = new ArrayDeque<>();
+        q.offer(root);
+        while(!q.isEmpty()) {
+            List<E> levelList = new ArrayList<>();
+            int size = q.size();
+            for(int i = 0; i < size; i++) {
+                Node node = q.poll();
+                levelList.add(node.e);
+                if(node.left != null) q.offer(node.left);
+                if(node.right != null) q.offer(node.right);
+            }
+            list.add(levelList);
+        }
+        return list;
+    }
+
 
     //层序遍历，广度优先遍历
-    public void levelOrder() {
+    public void levelOrder1() {
         Queue<Node> q = new LinkedList<>();
         q.add(root);
         while(!q.isEmpty()) {
             Node current = q.remove();
             System.out.print(current.e + " ");
-            if(current.left != null)
-                q.add(current.left);
-            if(current.right != null)
-                q.add(current.right);
+            if(current.left != null) q.add(current.left);
+            if(current.right != null) q.add(current.right);
         }
     }
 

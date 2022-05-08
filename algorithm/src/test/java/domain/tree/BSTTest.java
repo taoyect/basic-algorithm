@@ -38,6 +38,7 @@ public class BSTTest {
         int[] nums = {5, 3, 7, 6, 8, 4, 2};
         Arrays.stream(nums).forEach(bst::add);
         bst.inOrder(); //2 3 4 5 6 7 8
+        System.out.println(bst.levelOrder());
     }
     @Test
     public void testInOrderNR() {
