@@ -1,6 +1,7 @@
 package domain.tree;
 
 import domain.stack.ArrayStack2;
+import lombok.Getter;
 
 import java.util.*;
 
@@ -14,7 +15,7 @@ public class BST<E extends Comparable<E>> {
 //            left = right = null;
         }
     }
-
+    @Getter
     private Node root;
     private int size;
 
@@ -48,22 +49,6 @@ public class BST<E extends Comparable<E>> {
         return node;
     }
 
-    public void addNR(E e) {
-        if(root == null) { root = new Node(e);  size++; return; }
-        Node p = root;
-        while(p != null) {
-            if(e.compareTo(p.e) < 0) {
-                if(p.left == null) { p.left = new Node(e); size++; return; }
-                p = p.left;
-            } else if(e.compareTo(p.e) > 0){
-                if(p.right == null) { p.right = new Node(e); size++; return; }
-                p = p.right;
-            } else {
-                return;
-            }
-        }
-    }
-
     public boolean contains(E e) {
         return contains(root, e);
     }
@@ -90,21 +75,6 @@ public class BST<E extends Comparable<E>> {
         preOrder(node.right);
     }
 
-    //前序遍历以node为根的二分搜索树，非递归方式
-    public void preOrderNR() {
-        if(root == null) return;
-        ArrayStack2<Node> stack = new ArrayStack2<>();
-        stack.push(root);
-        while(!stack.isEmpty()) {
-            Node current = stack.pop();
-            System.out.print(current.e + " ");
-            if(current.right != null)
-                stack.push(current.right);
-            if(current.left != null)
-                stack.push(current.left);
-        }
-    }
-
     public void inOrder() {
         inOrder(root);
     }
@@ -114,21 +84,6 @@ public class BST<E extends Comparable<E>> {
         inOrder(node.left);
         System.out.print(node.e + " ");//访问当前节点做操作
         inOrder(node.right);
-    }
-
-    public void inOrderNR() {
-        if(root == null) return;
-        ArrayStack2<Node> stack = new ArrayStack2<>();
-        Node current = root;
-        while(current != null || !stack.isEmpty()) {
-            while(current != null) {
-                stack.push(current);
-                current = current.left;
-            }
-            current = stack.pop();
-            System.out.print(current.e + " ");
-            current = current.right;
-        }
     }
 
     public void postOrder() {
@@ -161,7 +116,98 @@ public class BST<E extends Comparable<E>> {
         return list;
     }
 
+    public Node remove(Node root, E e) {
+        if(root == null || e == null) return root;
+        if(root.e == e) {
+            if(root.left == null) return root.right;
+            if(root.right == null) return root.left;
+            Node min = getMin(root.right);
+            root.e = min.e;
+            root.right = remove(root.right, min.e);
+        } else if(e.compareTo(root.e) < 0) {
+            root.left = remove(root.left, e);
+        } else {
+            root.right = remove(root.right, e);
+        }
+        return root;
+    }
 
+    public Node getMin(Node root) {
+        while(root.left != null)
+            root = root.left;
+        return root;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder res = new StringBuilder();
+        generateBSTString(root,0, res);
+        return res.toString();
+    }
+
+    private void generateBSTString(Node node, int depth, StringBuilder res) {
+        if(node == null){
+            res.append(generateDepthString(depth)).append("null\n");
+            return;
+        }
+        res.append(generateDepthString(depth)).append(node.e).append("\n");
+        generateBSTString(node.left,depth + 1, res);
+        generateBSTString(node.right,depth + 1, res);
+    }
+
+    private String generateDepthString(int depth) {
+        StringBuilder res = new StringBuilder();
+        for(int i = 0; i < depth; i++){
+            res.append("--");
+        }
+        return res.toString();
+    }
+
+
+    ///////////////[ 其他 ]////////////////////////////////////////////////
+    public void addNR(E e) {
+        if(root == null) { root = new Node(e);  size++; return; }
+        Node p = root;
+        while(p != null) {
+            if(e.compareTo(p.e) < 0) {
+                if(p.left == null) { p.left = new Node(e); size++; return; }
+                p = p.left;
+            } else if(e.compareTo(p.e) > 0){
+                if(p.right == null) { p.right = new Node(e); size++; return; }
+                p = p.right;
+            } else {
+                return;
+            }
+        }
+    }
+    //前序遍历以node为根的二分搜索树，非递归方式
+    public void preOrderNR() {
+        if(root == null) return;
+        ArrayStack2<Node> stack = new ArrayStack2<>();
+        stack.push(root);
+        while(!stack.isEmpty()) {
+            Node current = stack.pop();
+            System.out.print(current.e + " ");
+            if(current.right != null)
+                stack.push(current.right);
+            if(current.left != null)
+                stack.push(current.left);
+        }
+    }
+    public void inOrderNR() {
+        if(root == null) return;
+        ArrayStack2<Node> stack = new ArrayStack2<>();
+        Node current = root;
+        while(current != null || !stack.isEmpty()) {
+            while(current != null) {
+                stack.push(current);
+                current = current.left;
+            }
+            current = stack.pop();
+            System.out.print(current.e + " ");
+            current = current.right;
+        }
+    }
     //层序遍历，广度优先遍历
     public void levelOrder1() {
         Queue<Node> q = new LinkedList<>();
@@ -173,18 +219,16 @@ public class BST<E extends Comparable<E>> {
             if(current.right != null) q.add(current.right);
         }
     }
-
     public E minimum() {
-        if(size == 0)
-            throw new IllegalArgumentException("BST is empty!");
+        if(size == 0) throw new IllegalArgumentException("BST is empty!");
         return minimum(root);
     }
 
     private E minimum(Node node) {
-      if(node == null) return null;
-      if(node.left != null)
-          return minimum(node.left);
-      return node.e;
+        if(node == null) return null;
+        if(node.left != null)
+            return minimum(node.left);
+        return node.e;
     }
 
     public E minimumNR() {
@@ -255,30 +299,5 @@ public class BST<E extends Comparable<E>> {
         }
         node.right = removeMax(node.right);
         return node;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder res = new StringBuilder();
-        generateBSTString(root,0, res);
-        return res.toString();
-    }
-
-    private void generateBSTString(Node node, int depth, StringBuilder res) {
-        if(node == null){
-            res.append(generateDepthString(depth)).append("null\n");
-            return;
-        }
-        res.append(generateDepthString(depth)).append(node.e).append("\n");
-        generateBSTString(node.left,depth + 1, res);
-        generateBSTString(node.right,depth + 1, res);
-    }
-
-    private String generateDepthString(int depth) {
-        StringBuilder res = new StringBuilder();
-        for(int i = 0; i < depth; i++){
-            res.append("--");
-        }
-        return res.toString();
     }
 }

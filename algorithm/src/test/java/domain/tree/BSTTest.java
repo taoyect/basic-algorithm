@@ -106,4 +106,16 @@ public class BSTTest {
         System.out.println(bst.removeMax());
         System.out.println(bst);
     }
+    @Test
+    public void testRemove() {
+        BST<Integer> bst = new BST<>();
+        int[] nums = {5, 3, 7, 6, 8, 4, 2};
+        Arrays.stream(nums).forEach(bst::add);
+        System.out.println(bst);
+        bst.preOrder(); //5 3 2 4 7 6 8
+        System.out.println(bst.remove(bst.getRoot(), 7));
+        System.out.println(bst);
+        bst.preOrder(); //5 3 2 4 8 6
+
+    }
 }
