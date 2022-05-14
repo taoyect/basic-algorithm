@@ -115,27 +115,104 @@ public class BST<E extends Comparable<E>> {
         return list;
     }
 
-    public Node remove(Node root, E e) {
-        if(root == null || e == null) return root;
-        if(root.e == e) {
-            if(root.left == null) return root.right;
-            if(root.right == null) return root.left;
-            Node min = getMin(root.right); //找右子树的最小节点来替换root
-            root.e = min.e;
-            root.right = remove(root.right, min.e);
-        } else if(e.compareTo(root.e) < 0) {
-            root.left = remove(root.left, e);
+    public Node remove(Node node, E e) {
+        if(node == null) return null;
+        if(e.compareTo(node.e) == 0) {
+            if(node.left == null) { //待删除节点左子树为空的情况
+                Node rightNode = node.right;
+                node.right = null;
+                size--;
+                return rightNode;
+            }
+            if(node.right == null) { //待删除节点右子树为空的情况
+                Node leftNode = node.left;
+                node.left = null;
+                size--;
+                return leftNode;
+            }
+            //待删除节点左右子树均不为空的情况：用右子树最小节点顶替待删除节点的位置 (1962 Hibbard Deletion)
+            Node successor = minimum(node.right);
+            successor.right = removeMin(node.right);
+            successor.left = node.left;
+            node.left = node.right = null;
+            return successor;
+        } else if(e.compareTo(node.e) < 0) {
+            node.left = remove(node.left, e);
+            return node;
         } else {
-            root.right = remove(root.right, e);
+            node.right = remove(node.right, e);
+            return node;
         }
+    }
+
+    //删除以node为根的二分搜索树的最小节点，返回删除节点后新的二分搜索树的根
+    public Node removeMin(Node node) {
+        if(node == null) return null;
+        if(node.left == null) {
+            Node rightNode = node.right;
+            node.right = null;
+            size--;
+            return rightNode;
+        }
+        node.left = removeMin(node.left);
+        return node;
+    }
+
+    public Node removeMinNR(Node node) {
+        if(node == null) return null;
+        if(node.left == null) {
+            Node rightNode = node.right;
+            node.right = null;
+            size--;
+            return rightNode;
+        }
+        Node root = node; //记录根节点
+        Node pre = null;
+        while(node.left != null) {
+            pre = node;
+            node = node.left;
+        }
+        pre.left = node.right;
+        node.right = null; //显示断开node.right
         return root;
     }
 
-    public Node getMin(Node root) {
-        while(root.left != null)
-            root = root.left;
-        return root;
+    //返回以node为根的二分搜索树的最小值所在的节点
+    private Node minimum(Node node) {
+        if(node.left == null) return node;
+        return minimum(node.left);
     }
+    public Node minimumNR(Node node) {
+        while(node.left != null)
+            node = node.left;
+        return node;
+    }
+
+    private Node maximum(Node node) {
+        if(node.right == null) return node;
+        return maximum(node.right);
+    }
+    private Node maximumNR(Node node) {
+        while(node.right != null)
+            node = node.right;
+        return node;
+    }
+//    public Node remove(Node root, E e) {
+//        if(root == null || e == null) return root;
+//        if(root.e == e) {
+//            //better: Node temp = root.right; root.right = null; return temp; size--
+//            if(root.left == null) return root.right;
+//            if(root.right == null) return root.left;
+//            Node min = getMin(root.right); //找右子树的最小节点来替换root
+//            root.e = min.e;
+//            root.right = remove(root.right, min.e);
+//        } else if(e.compareTo(root.e) < 0) {
+//            root.left = remove(root.left, e);
+//        } else {
+//            root.right = remove(root.right, e);
+//        }
+//        return root;
+//    }
 
     @Override
     public String toString() {
@@ -219,48 +296,15 @@ public class BST<E extends Comparable<E>> {
         }
     }
     public E minimum() {
-        if(size == 0) throw new IllegalArgumentException("BST is empty!");
-        return minimum(root);
-    }
-
-    private E minimum(Node node) {
-        if(node == null) return null;
-        if(node.left != null)
-            return minimum(node.left);
-        return node.e;
-    }
-
-    public E minimumNR() {
         if(size == 0)
             throw new IllegalArgumentException("BST is empty!");
-        if(root == null) return null;
-        Node current = root;
-        while(current.left != null)
-            current = current.left;
-        return current.e;
+        return minimum(root).e;
     }
 
     public E maximum() {
         if(size == 0)
             throw new IllegalArgumentException("BST is empty!");
-        return maximum(root);
-    }
-
-    private E maximum(Node node) {
-        if(node == null) return null;
-        if(node.right != null)
-            return maximum(node.right);
-        return node.e;
-    }
-
-    public E maximumNR() {
-        if(size == 0)
-            throw new IllegalArgumentException("BST is empty!");
-        if(root == null) return null;
-        Node current = root;
-        while(current.right != null)
-            current = current.right;
-        return current.e;
+        return maximum(root).e;
     }
 
     //从二分搜索树中删除最小值所在的节点，返回最小值
@@ -268,18 +312,6 @@ public class BST<E extends Comparable<E>> {
         E ret = minimum();
         root = removeMin(root);
         return ret;
-    }
-    //删除以node为根的二分搜索树的最小节点，返回删除节点后新的二分搜索树的根
-    private Node removeMin(Node node) {
-        if(node == null) return null;
-        if(node.left == null) {
-            Node rightNode = node.right;
-            node.right = null;
-            size--;
-            return rightNode;
-        }
-        node.left = removeMin(node.left);
-        return node;
     }
 
     public E removeMax() {

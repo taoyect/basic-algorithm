@@ -77,7 +77,6 @@ public class BSTTest {
         int[] nums = {5, 3, 7, 6, 8, 4, 2};
         Arrays.stream(nums).forEach(bst::add);
         System.out.println(bst.minimum());
-        System.out.println(bst.minimumNR());
     }
 
     @Test
@@ -86,7 +85,6 @@ public class BSTTest {
         int[] nums = {5, 3, 7, 6, 8, 4, 2};
         Arrays.stream(nums).forEach(bst::add);
         System.out.println(bst.maximum());
-        System.out.println(bst.maximumNR());
     }
     @Test
     public void testRemoveMin() {
@@ -105,6 +103,18 @@ public class BSTTest {
         System.out.println(bst.removeMax());
         System.out.println(bst.removeMax());
         System.out.println(bst);
+    }
+    @Test
+    public void testRemoveMinNR() {
+        BST<Integer> bst = new BST<>();
+        int[] nums = {5, 3, 7, 6, 8, 4, 2};
+        Arrays.stream(nums).forEach(bst::add);
+        System.out.println(bst);
+        bst.preOrder(); //5 3 2 4 7 6 8
+        System.out.println(bst.removeMinNR(bst.getRoot()));
+        System.out.println(bst);
+        bst.preOrder(); //5 3 4 7 6 8
+
     }
     @Test
     public void testRemove() {
