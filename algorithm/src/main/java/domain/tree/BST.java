@@ -55,7 +55,6 @@ public class BST<E extends Comparable<E>> {
 
     private boolean contains(Node node, E e) {
         if(node == null) return false;
-
         if(e.compareTo(node.e) == 0)
             return true;
         else if(e.compareTo(node.e) < 0)
@@ -121,7 +120,7 @@ public class BST<E extends Comparable<E>> {
         if(root.e == e) {
             if(root.left == null) return root.right;
             if(root.right == null) return root.left;
-            Node min = getMin(root.right);
+            Node min = getMin(root.right); //找右子树的最小节点来替换root
             root.e = min.e;
             root.right = remove(root.right, min.e);
         } else if(e.compareTo(root.e) < 0) {
