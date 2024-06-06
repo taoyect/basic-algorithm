@@ -1,6 +1,6 @@
 package domain.queue;
 
-import domain.Array;
+import domain.basic.Array;
 
 public class ArrayQueue<E> implements Queue<E> {
 
@@ -41,17 +41,14 @@ public class ArrayQueue<E> implements Queue<E> {
 
     @Override
     public String toString() {
-        StringBuilder res = new StringBuilder();
-//        res.append("Queue: ");
-        res.append("front [");
+        StringBuilder res = new StringBuilder("front [");
         for(int i = 0; i < arr.size(); i++) {
             res.append(arr.get(i));
             if(i != arr.size() - 1) {
                 res.append(", ");
             }
         }
-        res.append("] tail");
-        return res.toString();
+        return res.append("] tail").toString();
     }
 
 }

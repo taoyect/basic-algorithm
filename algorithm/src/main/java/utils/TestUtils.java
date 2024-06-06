@@ -1,8 +1,8 @@
 package utils;
 
 import domain.BasicRem;
-import domain.queue.LoopQueue;
 import domain.queue.Queue;
+import domain.stack.LinkedListStack;
 import domain.stack.Stack;
 
 /**
@@ -44,7 +44,7 @@ public class TestUtils {
     }
 
     public static void main(String[] args) {
-        LoopQueue<Integer> arrayQueue = new LoopQueue<>();
+        LinkedListStack<Integer> arrayQueue = new LinkedListStack<>();
         test(arrayQueue);
     }
 
@@ -71,9 +71,9 @@ public class TestUtils {
      * pop次数: 4, value = 0
      * stack: Stack: [] top
      * Exception in thread "main" java.lang.IndexOutOfBoundsException: Index: -1, Size: 0
-     * at domain.Array.rangeCheck(Array.java:168)
-     * at domain.Array.remove(Array.java:80)
-     * at domain.Array.removeLast(Array.java:119)
+     * at domain.basic.Array.rangeCheck(Array.java:168)
+     * at domain.basic.Array.remove(Array.java:80)
+     * at domain.basic.Array.removeLast(Array.java:119)
      * at domain.stack.ArrayStack.pop(ArrayStack.java:33)
      * at utils.TestUtils.test(TestUtils.java:60)
      * at utils.TestUtils.main(TestUtils.java:68)

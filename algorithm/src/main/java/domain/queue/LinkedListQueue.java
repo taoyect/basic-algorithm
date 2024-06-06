@@ -53,16 +53,13 @@ public class LinkedListQueue<E> implements Queue<E> {
 
     @Override
     public String toString() {
-        StringBuilder res = new StringBuilder();
-//        res.append(String.format("Queue: size = %d\n", size));
-        res.append("front [ ");
+        StringBuilder res = new StringBuilder("front [ ");
         Node cur = head;
         while(cur != null) {
             res.append(cur.e).append(" ");
             cur = cur.next;
         }
-        res.append("] tail");
-        return res.toString();
+        return res.append("] tail").toString();
     }
 
     private class Node {

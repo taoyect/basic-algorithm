@@ -1,6 +1,6 @@
 package domain.stack;
 
-import domain.link.LinkedList;
+import domain.basic.LinkedList;
 
 public class LinkedListStack<E> implements Stack<E> {
 
@@ -26,11 +26,6 @@ public class LinkedListStack<E> implements Stack<E> {
     }
 
     @Override
-    public String toString() {
-        return "Stack: top " + list;
-    }
-
-    @Override
     public int size() {
         return list.size();
     }
@@ -38,5 +33,10 @@ public class LinkedListStack<E> implements Stack<E> {
     @Override
     public boolean isEmpty() {
         return list.isEmpty();
+    }
+
+    @Override
+    public String toString() {
+        return "top " + list;
     }
 }

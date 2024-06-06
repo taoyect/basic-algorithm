@@ -1,4 +1,4 @@
-package domain.link;
+package domain.basic;
 
 import domain.BasicRem;
 import utils.TestUtils;

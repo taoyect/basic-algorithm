@@ -41,16 +41,14 @@ public class ArrayStack2<E> implements Stack<E> {
 
     @Override
     public String toString() {
-        StringBuilder res = new StringBuilder();
-        res.append("Stack: [");
+        StringBuilder res = new StringBuilder("stack: [");
         for(int i = 0; i < list.size(); i++) {
             res.append(list.get(i));
             if(i != list.size() - 1) {
                 res.append(", ");
             }
         }
-        res.append("] top");
-        return res.toString();
+        return res.append("] top").toString();
     }
 
 }

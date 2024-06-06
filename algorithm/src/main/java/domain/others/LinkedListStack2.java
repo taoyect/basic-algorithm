@@ -1,4 +1,6 @@
-package domain.stack;
+package domain.others;
+
+import domain.stack.Stack;
 
 import java.util.LinkedList;
 

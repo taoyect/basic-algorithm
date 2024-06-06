@@ -1,6 +1,6 @@
-package domain;
+package domain.basic;
 
-import utils.TestUtils;
+import domain.BasicRem;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -130,9 +130,7 @@ public class Array<E> implements BasicRem<E> {
 
     @Override
     public String toString() {
-        StringBuilder res = new StringBuilder();
-//        res.append(String.format("Array: size = %d, capacity = %d\n", size, data.length));
-        res.append("[");
+        StringBuilder res = new StringBuilder("[");
         for(int i = 0; i < size; i++) {
             res.append(data[i]);
             if(i != size - 1)
@@ -205,11 +203,10 @@ public class Array<E> implements BasicRem<E> {
      * removeElement 8
      * [2, 3, 4, 6, 7, 9]
      */
-    public static void main(String[] args) {
-        Array<Integer> array = new Array<>();
-        TestUtils.test(array);
-    }
-
+//    public static void main(String[] args) {
+//        Array<Integer> array = new Array<>();
+//        TestUtils.test(array);
+//    }
     //    public E getLast() {
 //        return get(size - 1);
 //    }

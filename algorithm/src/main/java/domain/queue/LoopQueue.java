@@ -66,17 +66,14 @@ public class LoopQueue<E> implements Queue<E> {
 
     @Override
     public String toString() {
-        StringBuilder res = new StringBuilder();
-//        res.append(String.format("Queue: size = %d , capacity = %d\n", size, arr.length));
-        res.append("front [");
+        StringBuilder res = new StringBuilder("front [");
         for (int i = 0; i < size; i++) {
             res.append(arr[(front + i) % arr.length]);
             if (i != size - 1) {
                 res.append(", ");
             }
         }
-        res.append("] tail");
-        return res.toString();
+        return res.append("] tail").toString();
     }
 
 }

@@ -1,4 +1,4 @@
-package domain.queue;
+package domain.others;
 
 public class Deque<E> {
 

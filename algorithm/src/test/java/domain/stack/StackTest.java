@@ -1,5 +1,7 @@
 package domain.stack;
 
+import domain.others.LinkedListStack2;
+
 import java.util.Random;
 
 public class StackTest {

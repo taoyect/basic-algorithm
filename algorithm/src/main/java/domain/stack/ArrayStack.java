@@ -1,6 +1,6 @@
 package domain.stack;
 
-import domain.Array;
+import domain.basic.Array;
 
 public class ArrayStack<E> implements Stack<E> {
 
@@ -40,16 +40,14 @@ public class ArrayStack<E> implements Stack<E> {
 
     @Override
     public String toString() {
-        StringBuilder res = new StringBuilder();
-        res.append("Stack: [");
+        StringBuilder res = new StringBuilder("stack: [");
         for(int i = 0; i < arr.size(); i++) {
             res.append(arr.get(i));
             if(i != arr.size() - 1) {
                 res.append(", ");
             }
         }
-        res.append("] top");
-        return res.toString();
+        return res.append("] top").toString();
     }
 
 }
