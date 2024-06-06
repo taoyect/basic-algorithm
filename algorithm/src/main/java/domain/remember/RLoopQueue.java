@@ -18,7 +18,7 @@ public class RLoopQueue<E> implements Queue<E> {
    }
 
     @Override
-    public int getSize() {
+    public int size() {
         return size;
     }
 

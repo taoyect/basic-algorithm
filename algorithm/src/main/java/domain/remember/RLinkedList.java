@@ -127,8 +127,7 @@ public class RLinkedList<E> implements BasicRem<E> {
     }
 
     public static void main(String[] args) {
-
-        TestUtils.testArray(new RLinkedList<>());
+        TestUtils.test(new RLinkedList<>());
     }
 
     private class Node {

@@ -26,12 +26,12 @@ public class ArrayQueue<E> implements Queue<E> {
 
     @Override
     public E getFront() {
-        return arr.getFirst();
+        return arr.get(0);
     }
 
     @Override
-    public int getSize() {
-        return arr.getSize();
+    public int size() {
+        return arr.size();
     }
 
     @Override
@@ -39,17 +39,14 @@ public class ArrayQueue<E> implements Queue<E> {
         return arr.isEmpty();
     }
 
-    public int getCapacity() {
-        return arr.getCapacity();
-    }
-
     @Override
     public String toString() {
         StringBuilder res = new StringBuilder();
-        res.append("Queue: front [");
-        for(int i = 0; i < arr.getSize(); i++) {
+//        res.append("Queue: ");
+        res.append("front [");
+        for(int i = 0; i < arr.size(); i++) {
             res.append(arr.get(i));
-            if(i != arr.getSize() - 1) {
+            if(i != arr.size() - 1) {
                 res.append(", ");
             }
         }

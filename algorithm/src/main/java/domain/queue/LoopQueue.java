@@ -15,20 +15,6 @@ public class LoopQueue<E> implements Queue<E> {
         this(10);
     }
 
-    public int getCapacity() {
-        return arr.length;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return size == 0;
-    }
-
-    @Override
-    public int getSize() {
-        return size;
-    }
-
     @Override
     public void enqueue(E e) {
         if (size >= arr.length)
@@ -69,13 +55,25 @@ public class LoopQueue<E> implements Queue<E> {
     }
 
     @Override
+    public int size() {
+        return size;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    @Override
     public String toString() {
         StringBuilder res = new StringBuilder();
-        res.append(String.format("Queue: size = %d , capacity = %d\n", size, arr.length));
+//        res.append(String.format("Queue: size = %d , capacity = %d\n", size, arr.length));
         res.append("front [");
         for (int i = 0; i < size; i++) {
             res.append(arr[(front + i) % arr.length]);
-            if (i != size - 1) res.append(", ");
+            if (i != size - 1) {
+                res.append(", ");
+            }
         }
         res.append("] tail");
         return res.toString();

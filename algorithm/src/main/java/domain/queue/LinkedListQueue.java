@@ -5,8 +5,7 @@ public class LinkedListQueue<E> implements Queue<E> {
     private Node head, tail;
     private int size;
 
-    public LinkedListQueue() {
-    }
+    public LinkedListQueue() {}
 
     @Override
     public void enqueue(E e) {
@@ -43,7 +42,7 @@ public class LinkedListQueue<E> implements Queue<E> {
     }
 
     @Override
-    public int getSize() {
+    public int size() {
         return size;
     }
 
@@ -55,7 +54,7 @@ public class LinkedListQueue<E> implements Queue<E> {
     @Override
     public String toString() {
         StringBuilder res = new StringBuilder();
-        res.append(String.format("Queue: size = %d\n", size));
+//        res.append(String.format("Queue: size = %d\n", size));
         res.append("front [ ");
         Node cur = head;
         while(cur != null) {
@@ -79,7 +78,6 @@ public class LinkedListQueue<E> implements Queue<E> {
             this.e = e;
         }
 
-        public Node() {
-        }
+        public Node() {}
     }
 }

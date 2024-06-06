@@ -1,29 +1,20 @@
 package domain.link;
 
-import lombok.Getter;
+import domain.BasicRem;
+import utils.TestUtils;
 
 import java.util.Objects;
 
-public class LinkedList<E> {
+public class LinkedList<E> implements BasicRem<E> {
 
     private Node dummyHead;
-    @Getter
     private int size;
 
     public LinkedList() {
-        this.dummyHead = new Node(null, null);
+        this.dummyHead = new Node();
         size = 0;
     }
 
-    public int getSize() {
-        return size;
-    }
-
-    public boolean isEmpty() {
-        return size == 0;
-    }
-
-    //===================================【增】================================================
     //在链表的index(0-based)位置前添加新的元素e【非常用操作，仅练习用】
     public void add(int index, E e) {
         if (index < 0 || index > size)
@@ -36,21 +27,9 @@ public class LinkedList<E> {
 //             node.next = prev.next;
 //             prev.next = node;
         prev.next = new Node(e, prev.next);
-
         size++;
     }
 
-    //在链表头添加新的元素e
-    public void addFirst(E e) {
-        add(0, e);
-    }
-
-    //在链表末尾添加新的元素e
-    public void addLast(E e) {
-        add(size, e);
-    }
-
-    //===================================【删】================================================
     //删除链表的第index(0-based)位置的元素【非常用操作，仅练习用】
     public E remove(int index) {
         if (index < 0 || index >= size)
@@ -66,27 +45,15 @@ public class LinkedList<E> {
         return delNode.e;
     }
 
-    public E removeFirst() {
-        return remove(0);
-    }
-
-    public E removeLast() {
-        return remove(size - 1);
-    }
-
-    //===================================【改】================================================
-    //修改链表的第index(0-based)位置的元素为e【非常用操作，仅练习用】
-    public void set(int index, E e) {
-        if (index < 0 || index >= size)
-            throw new IllegalArgumentException("failed. Illegal index.");
+    public int indexOf(E e) {
         Node cur = dummyHead;
-        for (int i = 0; i <= index; i++) {
+        for (int i = 0; i < size; i++) {
             cur = cur.next;
+            if (Objects.equals(cur.e, e)) return i;
         }
-        cur.e = e;
+        return -1;
     }
 
-    //===================================【查】================================================
     //获取链表的第index(0-based)位置的元素【非常用操作，仅练习用】
     public E get(int index) {
         if (index < 0 || index >= size)
@@ -99,32 +66,23 @@ public class LinkedList<E> {
         return cur.e;
     }
 
-    public E getFirst() {
-        return get(0);
-    }
-
-    public E getLast() {
-        return get(size - 1);
-    }
-
-
-    //查找链表中是否有元素e
-    public boolean contains(E e) {
-        for (Node cur = dummyHead.next; cur != null; cur = cur.next) {
-            if (Objects.equals(cur.e, e)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public int indexOf(E e) {
+    //修改链表的第index(0-based)位置的元素为e【非常用操作，仅练习用】
+    public void set(int index, E e) {
+        if (index < 0 || index >= size)
+            throw new IllegalArgumentException("failed. Illegal index.");
         Node cur = dummyHead;
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i <= index; i++) {
             cur = cur.next;
-            if (Objects.equals(cur.e, e)) return i;
         }
-        return -1;
+        cur.e = e;
+    }
+
+    public int size() {
+        return size;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
     }
 
     @Override
@@ -141,22 +99,44 @@ public class LinkedList<E> {
         return res.toString();
     }
 
-    public static void main(String[] args) {
-        LinkedList<Integer> linkedList = new LinkedList<>();
-        for (int i = 0; i < 5; i++) {
-            linkedList.addFirst(i);
-            System.out.println(linkedList);
+    //===================================【其他】==================================
+    public void addFirst(E e) { //在链表头添加新的元素e
+        add(0, e);
+    }
+
+    public void addLast(E e) {   //在链表末尾添加新的元素e
+        add(size, e);
+    }
+
+    public E removeFirst() {
+        return remove(0);
+    }
+
+    public E removeLast() {
+        return remove(size - 1);
+    }
+
+    public boolean contains(E e) {
+        return indexOf(e) >= 0;
+    }
+
+    public void removeElement(E e) {
+        Node prev = dummyHead;
+        for (int i = 1; i < size; i++) {
+            if (prev.next != null && Objects.equals(prev.next.e, e)) {
+                Node delNode = prev.next;
+                prev.next = delNode.next;
+                delNode.next = null;
+                size--;
+                return;
+            }
+            prev = prev.next;
+            if (prev == null) return;
         }
-         linkedList.add(2, 666);
-        System.out.println(linkedList);
-        System.out.println("get 2: " + linkedList.get(2));
-        System.out.println("indexOf 4: " + linkedList.indexOf(4));
-        System.out.println("contains 888: " + linkedList.contains(888));
-        linkedList.set(3, 999);
-        System.out.println("indexOf 999: " + linkedList.indexOf(999));
-        System.out.println(linkedList);
-        linkedList.remove(2);
-        System.out.println(linkedList);
+    }
+
+    public static void main(String[] args) {
+        TestUtils.test(new LinkedList<>());
     }
 
     private class Node {

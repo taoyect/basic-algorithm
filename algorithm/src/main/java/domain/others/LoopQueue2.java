@@ -1,4 +1,6 @@
-package domain.queue;
+package domain.others;
+
+import domain.queue.Queue;
 
 public class LoopQueue2<E> implements Queue<E> {
     private E[] arr;
@@ -50,7 +52,7 @@ public class LoopQueue2<E> implements Queue<E> {
     }
 
     @Override
-    public int getSize() {
+    public int size() {
         return size;
     }
 

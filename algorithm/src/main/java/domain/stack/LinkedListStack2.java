@@ -1,6 +1,6 @@
 package domain.stack;
 
-import domain.link.LinkedList;
+import java.util.LinkedList;
 
 public class LinkedListStack2<E> implements Stack<E> {
 
@@ -11,28 +11,18 @@ public class LinkedListStack2<E> implements Stack<E> {
     }
 
     @Override
-    public int getSize() {
-        return list.getSize();
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return list.isEmpty();
-    }
-
-    @Override
     public void push(E e) {
         list.addFirst(e);
     }
 
     @Override
     public E pop() {
-        return list.removeFirst();
+        return list.pop();
     }
 
     @Override
     public E peek() {
-        return list.getFirst();
+        return list.peek();
     }
 
     @Override
@@ -40,4 +30,13 @@ public class LinkedListStack2<E> implements Stack<E> {
         return "Stack: top " + list;
     }
 
+    @Override
+    public int size() {
+        return list.size();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return list.isEmpty();
+    }
 }

@@ -22,8 +22,8 @@ public class StackTest {
     public static void main(String[] args) {
         testStack(new ArrayStack<>(), 2000000);
         testStack(new ArrayStack2<>(), 2000000);
-        testStack(new LinkedListStack<>(), 2000000);
         testStack(new LinkedListStack2<>(), 2000000);
+        testStack(new LinkedListStack<>(), 2000000);
 
     }
 }

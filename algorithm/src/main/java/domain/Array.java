@@ -1,6 +1,6 @@
 package domain;
 
-import lombok.Getter;
+import utils.TestUtils;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -10,9 +10,8 @@ import java.util.Objects;
  * capacity: 数组的容量
  * size: 数组中实际存放的元素个数
  */
-public class Array<E> {
+public class Array<E> implements BasicRem<E> {
     private E[] data;
-    @Getter
     private int size;
 
     @SuppressWarnings("unchecked")
@@ -25,25 +24,9 @@ public class Array<E> {
         this(10);
     }
 
-    public int getCapacity() {
-        return data.length;
-    }
-
-    public boolean isEmpty() {
-        return size == 0;
-    }
-
-//    @SuppressWarnings("unchecked")
-    public void resize(int newCapacity) {
-//        E[] newData = (E[])new Object[newCapacity];
-//        for(int i = 0; i < size; i++)
-//            newData[i] = data[i];
-//        data = newData;
-       data = Arrays.copyOf(data, newCapacity);
-    }
-
     public void add(int index, E e) {
-        rangeCheckForAdd(index);
+        if (index > size || index < 0)
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         if(size >= data.length) {
             resize(2 * data.length);
         }
@@ -65,19 +48,12 @@ public class Array<E> {
         size++;
     }
 
-    public void addLast(E e) {
-        add(size, e);
-    }
-
-    public void addFirst(E e) {
-        add(0, e);
-    }
-
     /**
      * 从数组中删除index位置的元素，并返回删除的元素
      */
     public E remove(int index) {
-        rangeCheck(index);
+        if (index >= size || index < 0)
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         E temp = data[index];
 
         int numMoved = (size - 1 - (index + 1)) + 1;
@@ -111,12 +87,14 @@ public class Array<E> {
         return temp;
     }
 
-    public E removeFirst() {
-        return remove(0);
-    }
 
-    public E removeLast() {
-        return remove(size - 1);
+    //    @SuppressWarnings("unchecked")
+    private void resize(int newCapacity) {
+//        E[] newData = (E[])new Object[newCapacity];
+//        for(int i = 0; i < size; i++)
+//            newData[i] = data[i];
+//        data = newData;
+        data = Arrays.copyOf(data, newCapacity);
     }
 
     /**
@@ -130,6 +108,56 @@ public class Array<E> {
         return -1;
     }
 
+    public E get(int index) {
+        if (index >= size || index < 0)
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+        return data[index];
+    }
+
+    public void set(int index, E e) {
+        if (index >= size || index < 0)
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+        data[index] = e;
+    }
+
+    public int size() {
+        return size;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder res = new StringBuilder();
+//        res.append(String.format("Array: size = %d, capacity = %d\n", size, data.length));
+        res.append("[");
+        for(int i = 0; i < size; i++) {
+            res.append(data[i]);
+            if(i != size - 1)
+                res.append(", ");
+        }
+        return res.append("]").toString();
+    }
+
+    //===================================【其他】==================================
+    public void addLast(E e) {
+        add(size, e);
+    }
+
+    public void addFirst(E e) {
+        add(0, e);
+    }
+
+    public E removeFirst() {
+        return remove(0);
+    }
+
+    public E removeLast() {
+        return remove(size - 1);
+    }
+
     public boolean contains(E e) {
         return indexOf(e) >= 0;
     }
@@ -140,74 +168,53 @@ public class Array<E> {
             remove(index); //删除对应索引位置的元素
     }
 
-    public void set(int index, E e) {
-        rangeCheck(index);
-        data[index] = e;
-    }
-
-    public E get(int index) {
-        rangeCheck(index);
-        return data[index];
-    }
-
-    public E getLast() {
-        return get(size - 1);
-    }
-
-    public E getFirst() {
-        return get(0);
-    }
-
-    public void rangeCheckForAdd(int index) {
-        if (index > size || index < 0)
-            throw new IndexOutOfBoundsException(outOfBoundsMsg(index));
-    }
-
-    private void rangeCheck(int index) {
-        if (index >= size || index < 0)
-            throw new IndexOutOfBoundsException(outOfBoundsMsg(index));
-    }
-
-    private String outOfBoundsMsg(int index) {
-        return "Index: "+index+", Size: "+size;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder res = new StringBuilder();
-        res.append(String.format("Array: size = %d, capacity = %d\n", size, data.length));
-        res.append("[");
-        for(int i = 0; i < size; i++) {
-            if(i != size - 1)
-                res.append(data[i]).append(", ");
-            else
-                res.append(data[i]).append("]");
-        }
-        return res.toString();
-    }
-
+    /**
+     * initial: []
+     * addLast: 2
+     * [2]
+     * addLast: 3
+     * [2, 3]
+     * addLast: 4
+     * [2, 3, 4]
+     * addLast: 5
+     * [2, 3, 4, 5]
+     * addLast: 6
+     * [2, 3, 4, 5, 6]
+     * addLast: 7
+     * [2, 3, 4, 5, 6, 7]
+     * addLast: 8
+     * [2, 3, 4, 5, 6, 7, 8]
+     * addLast: 9
+     * [2, 3, 4, 5, 6, 7, 8, 9]
+     * addLast: 10
+     * [2, 3, 4, 5, 6, 7, 8, 9, 10]
+     * addFirst: 1
+     * [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+     * size: 10, isEmpty: false
+     * removeFirst: 1
+     * [2, 3, 4, 5, 6, 7, 8, 9, 10]
+     * removeLast: 10
+     * [2, 3, 4, 5, 6, 7, 8, 9]
+     * remove index 2: 4
+     * [2, 3, 5, 6, 7, 8, 9]
+     * get index 2: 5
+     * set(2,4)
+     * [2, 3, 4, 6, 7, 8, 9]
+     * indexOf 6: 3
+     * contains 5: false
+     * removeElement 8
+     * [2, 3, 4, 6, 7, 9]
+     */
     public static void main(String[] args) {
         Array<Integer> array = new Array<>();
-        int[] arr = new int[] {1,2,3};
-        System.arraycopy(arr, 0, arr, 1, 0);
-        array.resize(0);
-//        for(int i = 0; i < 10; i++)
-//            array.addLast(i);
-//        System.out.println(array);
-//        array.remove(10);
-//        array.add(1, 100);
-//        System.out.println(array);
-//        array.addFirst(-1);
-//        System.out.println(array);
-//
-//        array.remove(2);
-//        System.out.println(array);
-//        array.removeElement(4);
-//        System.out.println(array);
-//        array.removeFirst();
-//        System.out.println(array);
-//
-//        array.add(4, 4);
-//        System.out.println(array);
+        TestUtils.test(array);
     }
+
+    //    public E getLast() {
+//        return get(size - 1);
+//    }
+//
+//    public E getFirst() {
+//        return get(0);
+//    }
 }
