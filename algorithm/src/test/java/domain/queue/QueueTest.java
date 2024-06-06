@@ -1,5 +1,7 @@
 package domain.queue;
 
+import domain.remember.RLoopQueue;
+
 import java.util.Random;
 
 public class QueueTest {
@@ -20,7 +22,10 @@ public class QueueTest {
     }
 
     public static void main(String[] args) {
-        testQueue(new ArrayQueue<>(), 200000);
-        testQueue(new LoopQueue2<>(), 200000);
+//        testQueue(new ArrayQueue<>(), 200000);
+//        testQueue(new LoopQueue2<>(), 200000);
+        testQueue(new RLoopQueue<>(), 200000);
+        testQueue(new LinkedListQueue<>(), 200000);
+
     }
 }

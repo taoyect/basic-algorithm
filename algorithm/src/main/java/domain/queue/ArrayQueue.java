@@ -57,15 +57,4 @@ public class ArrayQueue<E> implements Queue<E> {
         return res.toString();
     }
 
-    public static void main(String[] args) {
-        ArrayQueue<Integer> arrayQueue = new ArrayQueue<>();
-        for(int i = 0; i < 5; i++) {
-            arrayQueue.enqueue(i);
-            System.out.println("i:" + i + ", " + arrayQueue);
-            if(i % 3 == 2) {
-                System.out.println("arrayQueue.dequeue:" + arrayQueue.dequeue());
-                System.out.println(arrayQueue);
-            }
-        }
-    }
 }

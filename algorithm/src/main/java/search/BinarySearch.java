@@ -1,10 +1,5 @@
 package search;
 
-import sort.QuickSort;
-import utils.ArrayGenerator;
-
-import java.util.Arrays;
-
 public class BinarySearch {
 
     //迭代版本
@@ -33,6 +28,15 @@ public class BinarySearch {
         if(target.compareTo(arr[mid]) < 0) return searchR(arr, lo, mid - 1, target);
         if(target.compareTo(arr[mid]) > 0) return searchR(arr, mid + 1, hi, target);
         return mid;
+    }
+
+    //基于lowerCeil
+    public static <T extends Comparable<T>> int search2(T[] arr, T target) {
+        if(target == null) return -1;
+        int index = lowerCeil(arr, target);
+        if(index < arr.length && arr[index].compareTo(target) == 0)
+            return index;
+        return -1;
     }
 
     // > target 的最小值索引
@@ -130,8 +134,7 @@ public class BinarySearch {
     }
 
     public static void main(String[] args) {
-        testLowerFloor();
-        testUpperFloor();
+        testNormalSearch();
     }
     public static void testLower() {
         Integer[] arr = {1, 1, 3, 3 ,5, 5};
@@ -178,13 +181,8 @@ public class BinarySearch {
     }
 
     public static void testNormalSearch() {
-        Integer[] integers = ArrayGenerator.generateRandomIntegerArray(5, 10);
-        System.out.println(Arrays.toString(integers));
-        QuickSort.sort3Ways(integers);
-        System.out.println(Arrays.toString(integers));
-
-        int search = search(integers, 5);
-
+        Integer[] arr = {1, 1, 3, 3 ,5, 5};
+        int search = search2(arr, 5);
         System.out.println(search);
     }
 }

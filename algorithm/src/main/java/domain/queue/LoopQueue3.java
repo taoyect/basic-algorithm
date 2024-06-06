@@ -93,16 +93,4 @@ public class LoopQueue3<E> implements Queue<E> {
             return res.toString();
         }
 
-        public static void main(String[] args){
-            LoopQueue3<Integer> queue = new LoopQueue3<>();
-            for(int i = 0 ; i < 10 ; i ++){
-                queue.enqueue(i);
-                System.out.println(queue);
-
-                if(i % 3 == 2){
-                    System.out.println("queue.dequeue:" + queue.dequeue());
-                    System.out.println(queue);
-                }
-            }
-        }
 }
