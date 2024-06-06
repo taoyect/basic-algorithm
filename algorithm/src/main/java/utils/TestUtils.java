@@ -1,6 +1,6 @@
 package utils;
 
-import domain.BasicRem;
+import domain.basic.BasicRem;
 import domain.queue.Queue;
 import domain.stack.LinkedListStack;
 import domain.stack.Stack;

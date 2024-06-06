@@ -1,6 +1,5 @@
 package domain.basic;
 
-import domain.BasicRem;
 import utils.TestUtils;
 
 import java.util.Objects;

@@ -1,6 +1,6 @@
 package domain.remember;
 
-import domain.BasicRem;
+import domain.basic.BasicRem;
 import utils.TestUtils;
 
 import java.util.Objects;
