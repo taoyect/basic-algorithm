@@ -158,10 +158,23 @@ public class Array<E> implements BasicRem<E> {
         return indexOf(e) >= 0;
     }
 
+    //删除首个
     public void removeElement(E e) {
         int index = indexOf(e); //查索引
-        if(index != -1)
+        if (index != -1)
             remove(index); //删除对应索引位置的元素
+    }
+
+    //删除全部的e
+    public void removeAllElement(E e) {
+        int i = 0;
+        while(i < size) {
+            if(Objects.equals(e, data[i])) {
+                remove(i);
+            } else {
+                i++;
+            }
+        }
     }
 
     /**
@@ -198,8 +211,10 @@ public class Array<E> implements BasicRem<E> {
      * [2, 3, 4, 6, 7, 8, 9]
      * indexOf 6: 3
      * contains 5: false
+     * add 8, index3*3,first*3,last*2: [8, 8, 8, 2, 3, 4, 8, 8, 8, 6, 7, 8, 9, 8, 8]
      * removeElement 8
      * [2, 3, 4, 6, 7, 9]
+     *
      */
 //    public static void main(String[] args) {
 //        Array<Integer> array = new Array<>();

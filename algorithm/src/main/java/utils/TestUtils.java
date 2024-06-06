@@ -1,8 +1,8 @@
 package utils;
 
 import domain.basic.BasicRem;
+import domain.basic.LinkedList;
 import domain.queue.Queue;
-import domain.stack.LinkedListStack;
 import domain.stack.Stack;
 
 /**
@@ -41,11 +41,6 @@ public class TestUtils {
         }
         System.out.println("front: " + queue.getFront());
         System.out.println("isEmpty: " + queue.isEmpty());
-    }
-
-    public static void main(String[] args) {
-        LinkedListStack<Integer> arrayQueue = new LinkedListStack<>();
-        test(arrayQueue);
     }
 
     /**
@@ -133,8 +128,11 @@ public class TestUtils {
      * 2 -> 3 -> 4 -> 6 -> 7 -> 8 -> 9
      * indexOf 6: 3
      * contains 5: false
-     * removeElement 8
+     * add 8, index3*3,first*3,last*2: 8 -> 8 -> 8 -> 2 -> 3 -> 4 -> 8 -> 8 -> 8 -> 6 -> 7 -> 8 -> 9 -> 8 -> 8
+     * removeAllElement 8
      * 2 -> 3 -> 4 -> 6 -> 7 -> 9
+     * removeElement 7
+     * 2 -> 3 -> 4 -> 6 -> 9
      */
     public static void test(BasicRem<Integer> b) {
         System.out.println("initial: " + b);
@@ -159,9 +157,24 @@ public class TestUtils {
         System.out.println(b);
         System.out.println("indexOf 6: " + b.indexOf(6));
         System.out.println("contains 5: " + b.contains(5));
-        System.out.println("removeElement 8");
-        b.removeElement(8);
+        b.add(3, 8);
+        b.add(3, 8);
+        b.add(3, 8);
+        b.addFirst(8);
+        b.addFirst(8);
+        b.addFirst(8);
+        b.addLast( 8);
+        b.addLast( 8);
+        System.out.println("add 8, index3*3,first*3,last*2: " + b);
+        System.out.println("removeAllElement 8");
+        b.removeAllElement(8);
+        System.out.println(b);
+        System.out.println("removeElement 7");
+        b.removeElement(7);
         System.out.println(b);
     }
-
+    public static void main(String[] args) {
+        LinkedList<Integer> arrayQueue = new LinkedList<>();
+        test(arrayQueue);
+    }
 }

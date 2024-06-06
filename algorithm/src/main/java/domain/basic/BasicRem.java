@@ -20,5 +20,6 @@ public interface BasicRem<E> {
     E removeLast();
     boolean contains(E e);
     void removeElement(E e);
+    void removeAllElement(E e);
 
 }

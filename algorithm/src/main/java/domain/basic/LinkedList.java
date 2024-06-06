@@ -134,6 +134,43 @@ public class LinkedList<E> implements BasicRem<E> {
         }
     }
 
+    @Override
+    public void removeAllElement(E e) {
+        Node prev = dummyHead;
+        while(prev.next != null) {
+            if(Objects.equals(e, prev.next.e)) {
+                Node delNode = prev.next;
+                prev.next = delNode.next;
+                delNode.next = null;
+                size--;
+            } else {
+                prev = prev.next;
+            }
+        }
+
+        //如果没有dummyHead, 需要把头节点先单独考虑
+//        Node head = dummyHead.next;
+//        while(head != null && Objects.equals(e, head.e)) {
+//            Node delHead = head;
+//            head = head.next;
+//            delHead.next = null;
+//        }
+//
+//        if(head == null) return;    //全部都删完了
+//
+//        Node prev = head;
+//        while(prev.next != null) {
+//            if(Objects.equals(e, prev.next.e)) {
+//                Node delNode = prev.next;
+//                prev.next = delNode.next;
+//                delNode.next = null;
+//                size--;
+//            } else {
+//                prev = prev.next;
+//            }
+//        }
+    }
+
     public static void main(String[] args) {
         TestUtils.test(new LinkedList<>());
     }

@@ -126,6 +126,11 @@ public class RLinkedList<E> implements BasicRem<E> {
         }
     }
 
+    @Override
+    public void removeAllElement(E e) {
+
+    }
+
     public static void main(String[] args) {
         TestUtils.test(new RLinkedList<>());
     }
