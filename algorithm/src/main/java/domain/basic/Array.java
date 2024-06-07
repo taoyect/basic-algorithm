@@ -160,17 +160,25 @@ public class Array<E> implements BasicRem<E> {
 
     //删除首个
     public void removeElement(E e) {
-        int index = indexOf(e); //查索引
-        if (index != -1)
-            remove(index); //删除对应索引位置的元素
+        for (int i = 0; i < size;) {
+            if(Objects.equals(data[i], e)) {
+                remove(i);  //注意，remove会改动size的值
+                return;
+            } else {
+                i++;
+            }
+        }
+
+//        int index = indexOf(e); //查索引
+//        if (index != -1)
+//            remove(index); //删除对应索引位置的元素
     }
 
     //删除全部的e
     public void removeAllElement(E e) {
-        int i = 0;
-        while(i < size) {
-            if(Objects.equals(e, data[i])) {
-                remove(i);
+        for (int i = 0; i < size;) {
+            if(Objects.equals(data[i], e)) {
+                remove(i);  //注意，remove会改动size的值, i+1位置的值会挪到i的位置，所以i不用++
             } else {
                 i++;
             }

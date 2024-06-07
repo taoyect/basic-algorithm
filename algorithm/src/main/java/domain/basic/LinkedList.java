@@ -142,8 +142,8 @@ public class LinkedList<E> implements BasicRem<E> {
 //    delNode.next = null;
     public void removeElement(E e) {
         Node prev = dummyHead;
-        int s = size;
-        for (int i = 0; i < s; i++) {
+//        int s = size;
+        for (int i = 0; i < size;) {
             if (prev == null || prev.next == null) return;
             Node cur = prev.next;
             if (Objects.equals(cur.e, e)) {
@@ -152,25 +152,38 @@ public class LinkedList<E> implements BasicRem<E> {
                 return;
             } else {
                 prev = cur;
+                i++;
             }
         }
+//  最佳实现
+//        while(prev.next != null) {
+//            if(Objects.equals(e, prev.next.e)) {
+//                prev.next = prev.next.next;
+//                size--;
+//                return;
+//            } else {
+//                prev = prev.next;
+//            }
+//        }
     }
 
     @Override
     public void removeAllElement(E e) {
         Node prev = dummyHead;  //i=0的prev
-        int s = size;
-        for (int i = 0; i < s; i++) {
+//        int s = size;
+        for (int i = 0; i < size;) {
             if(prev == null || prev.next == null) return;
             Node cur = prev.next;
             if(Objects.equals(cur.e, e)) {
+                //类比动态数组，相当于i+1位置的值会挪到i的位置，所以i不用++
                 prev.next = cur.next;
                 size--;
             } else {
                 prev = cur;
+                i++;
             }
         }
-
+//  最佳实现
 //        Node prev = dummyHead;
 //        while(prev.next != null) {
 //            if(Objects.equals(e, prev.next.e)) {
