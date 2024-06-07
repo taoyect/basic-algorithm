@@ -187,9 +187,7 @@ public class LinkedList<E> implements BasicRem<E> {
 //        Node prev = dummyHead;
 //        while(prev.next != null) {
 //            if(Objects.equals(e, prev.next.e)) {
-//                Node delNode = prev.next;
-//                prev.next = delNode.next;
-//                delNode.next = null;
+//                prev.next = prev.next.next;
 //                size--;
 //            } else {
 //                prev = prev.next;
