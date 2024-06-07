@@ -4,6 +4,10 @@ import utils.TestUtils;
 
 import java.util.Objects;
 
+/**
+ * 新增、删除等增删Node的操作，用prev
+ * 查询、修改e等用cur
+ */
 public class LinkedList<E> implements BasicRem<E> {
 
     private Node dummyHead;
@@ -14,17 +18,20 @@ public class LinkedList<E> implements BasicRem<E> {
         size = 0;
     }
 
+//             Node node = new Node(e);
+//             node.next = prev.next;
+//             prev.next = node;
     //在链表的index(0-based)位置前添加新的元素e【非常用操作，仅练习用】
     public void add(int index, E e) {
         if (index < 0 || index > size)
             throw new IllegalArgumentException("failed. Illegal index.");
+//========================================================
+// 找到i=index的prev
         Node prev = dummyHead; // i = 0 的prev
-        for (int i = 1; i <= index; i++) {
+        for (int i = 1; i <= index; i++) {  //循环完后找到i=index的prev
             prev = prev.next;
         }
-//             Node node = new Node(e);
-//             node.next = prev.next;
-//             prev.next = node;
+//========================================================
         prev.next = new Node(e, prev.next);
         size++;
     }
@@ -33,10 +40,13 @@ public class LinkedList<E> implements BasicRem<E> {
     public E remove(int index) {
         if (index < 0 || index >= size)
             throw new IllegalArgumentException("failed. Illegal index.");
+//========================================================
+// 找到i=index的prev
         Node pre = dummyHead;
         for (int i = 1; i <= index; i++) { //找第i个元素的prev
             pre = pre.next;
         }
+//========================================================
         Node delNode = pre.next;
         pre.next = delNode.next;
         delNode.next = null;
@@ -45,11 +55,14 @@ public class LinkedList<E> implements BasicRem<E> {
     }
 
     public int indexOf(E e) {
+//========================================================
+// 找i=0...size-1的cur
         Node cur = dummyHead;
         for (int i = 0; i < size; i++) {
             cur = cur.next;
             if (Objects.equals(cur.e, e)) return i;
         }
+//========================================================
         return -1;
     }
 
@@ -57,11 +70,13 @@ public class LinkedList<E> implements BasicRem<E> {
     public E get(int index) {
         if (index < 0 || index >= size)
             throw new IllegalArgumentException("failed. Illegal index.");
-
+//========================================================
+// 找到i=index的cur
         Node cur = dummyHead;   //current
         for (int i = 0; i <= index; i++) {
             cur = cur.next;
         }
+//========================================================
         return cur.e;
     }
 
@@ -69,10 +84,13 @@ public class LinkedList<E> implements BasicRem<E> {
     public void set(int index, E e) {
         if (index < 0 || index >= size)
             throw new IllegalArgumentException("failed. Illegal index.");
+//========================================================
+// 找到i=index的cur
         Node cur = dummyHead;
         for (int i = 0; i <= index; i++) {
             cur = cur.next;
         }
+//========================================================
         cur.e = e;
     }
 
@@ -119,34 +137,51 @@ public class LinkedList<E> implements BasicRem<E> {
         return indexOf(e) >= 0;
     }
 
+//    Node delNode = prev.next;
+//    prev.next = delNode.next;
+//    delNode.next = null;
     public void removeElement(E e) {
         Node prev = dummyHead;
-        for (int i = 1; i < size; i++) {
-            if (prev.next != null && Objects.equals(prev.next.e, e)) {
-                Node delNode = prev.next;
-                prev.next = delNode.next;
-                delNode.next = null;
+        int s = size;
+        for (int i = 0; i < s; i++) {
+            if (prev == null || prev.next == null) return;
+            Node cur = prev.next;
+            if (Objects.equals(cur.e, e)) {
+                prev.next = cur.next;
                 size--;
                 return;
+            } else {
+                prev = cur;
             }
-            prev = prev.next;
-            if (prev == null) return;
         }
     }
 
     @Override
     public void removeAllElement(E e) {
-        Node prev = dummyHead;
-        while(prev.next != null) {
-            if(Objects.equals(e, prev.next.e)) {
-                Node delNode = prev.next;
-                prev.next = delNode.next;
-                delNode.next = null;
+        Node prev = dummyHead;  //i=0的prev
+        int s = size;
+        for (int i = 0; i < s; i++) {
+            if(prev == null || prev.next == null) return;
+            Node cur = prev.next;
+            if(Objects.equals(cur.e, e)) {
+                prev.next = cur.next;
                 size--;
             } else {
-                prev = prev.next;
+                prev = cur;
             }
         }
+
+//        Node prev = dummyHead;
+//        while(prev.next != null) {
+//            if(Objects.equals(e, prev.next.e)) {
+//                Node delNode = prev.next;
+//                prev.next = delNode.next;
+//                delNode.next = null;
+//                size--;
+//            } else {
+//                prev = prev.next;
+//            }
+//        }
 
         //如果没有dummyHead, 需要把头节点先单独考虑
 //        Node head = dummyHead.next;

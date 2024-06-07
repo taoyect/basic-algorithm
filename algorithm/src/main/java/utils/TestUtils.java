@@ -145,13 +145,13 @@ public class TestUtils {
         System.out.println("addFirst: 1");
         System.out.println(b);
         System.out.println("size: " + b.size() + ", isEmpty: " + b.isEmpty());
-        System.out.println("removeFirst: " + b.removeFirst());
+        System.out.println("removeFirst: " + b.removeFirst() + ", size: " + b.size());
         System.out.println(b);
-        System.out.println("removeLast: " + b.removeLast());
+        System.out.println("removeLast: " + b.removeLast() + ", size: " + b.size());
         System.out.println(b);
-        System.out.println("remove index 2: " + b.remove(2));
+        System.out.println("remove index 2: " + b.remove(2)  + ", size: " + b.size());
         System.out.println(b);
-        System.out.println("get index 2: " + b.get(2));
+        System.out.println("get index 2: " + b.get(2)  + ", size: " + b.size());
         System.out.println("set(2,4)");
         b.set(2, 4);
         System.out.println(b);
@@ -171,7 +171,7 @@ public class TestUtils {
         System.out.println(b);
         System.out.println("removeElement 7");
         b.removeElement(7);
-        System.out.println(b);
+        System.out.println(b + ", size=" + b.size());
     }
     public static void main(String[] args) {
         LinkedList<Integer> arrayQueue = new LinkedList<>();
