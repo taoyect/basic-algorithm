@@ -1,7 +1,7 @@
 package utils;
 
 import domain.basic.BasicRem;
-import domain.basic.LinkedList;
+import domain.basic.LinkedListR;
 import domain.queue.Queue;
 import domain.stack.Stack;
 
@@ -174,7 +174,7 @@ public class TestUtils {
         System.out.println(b + ", size=" + b.size());
     }
     public static void main(String[] args) {
-        LinkedList<Integer> arrayQueue = new LinkedList<>();
+        LinkedListR<Integer> arrayQueue = new LinkedListR<>();
         test(arrayQueue);
     }
 }

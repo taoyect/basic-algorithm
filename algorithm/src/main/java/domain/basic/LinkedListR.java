@@ -201,13 +201,4 @@ public class LinkedListR<E> implements BasicRem<E> {
         }
     }
 
-//    private class IndexDto {
-//        public Node h;
-//        public int idx;
-//
-//        public IndexDto(Node h, int idx) {
-//            this.h = h;
-//            this.idx = idx;
-//        }
-//    }
 }
