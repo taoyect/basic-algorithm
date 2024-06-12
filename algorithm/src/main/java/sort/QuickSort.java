@@ -124,22 +124,24 @@ public class QuickSort {
      *         |  |
      *         |  |
      *         j  i
-     * start flag = arr[0] = 4, j = 0, i = j + 1
+     * start flag = arr[0] = 4, j = 0, i = 0 + 1 = 1
      * 1. j = 0, i = 1;  arr[i] = 6 > flag --> i++
      * 2. j = 0, i = 2;  arr[i] = 5 > flag --> i++
      * 3. j = 0, i = 3;  arr[i] = 2 < flag --> j++, swap(i, j), i++
-     *        4 6 5 2 3 8 7 1
-     * j++      j   i
+     * j++    4 6 5 2 3 8 7 1
+     *          j   i
      * swap   4 2 5 6 3 8 7 1
-     * i++      j     i
-     * 4. j = 1, i = 4; arr[i] = 3 < flag --> j++, swap(i, j), j++
+     *          j   i
+     * i++    4 2 5 6 3 8 7 1
+     *          j     i
+     * 4. j = 1, i = 4; arr[i] = 3 < flag --> swap(i, ++j), i++
      *        4 2 3 6 5 8 7 1
      *            j     i
      * ....
      *
-     *
      */
-    //arr[lo+1...j] < flag, arr[j+1...i-1] > flag
+    //arr[lo+1...j] < v, arr[j+1...i-1] > v
+    //v = flag
     public static <T extends Comparable<T>> int partitionV1(T[] arr, int lo, int hi) {
         T flag = arr[lo];
         int j = lo;
@@ -151,6 +153,7 @@ public class QuickSort {
     }
 
     public static <T> void swap(T[] arr, int a, int b) {
+        if(a == b) return;
         T temp = arr[a];
         arr[a] = arr[b];
         arr[b] = temp;

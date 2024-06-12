@@ -1,7 +1,7 @@
 package leecode.link;
 
 //
-public class Lee19 {
+public class LM19 {
     public ListNode removeNthFromEnd(ListNode head, int n) {
         if(head == null) return null;
         ListNode dummy = new ListNode(-1, head);

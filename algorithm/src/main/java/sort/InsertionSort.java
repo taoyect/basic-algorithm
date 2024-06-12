@@ -14,11 +14,11 @@ public class InsertionSort {
      * 把 arr[i] 插入到[0, i)中合适的位置
      * order: asc
      */
-    public static <T extends Comparable<T>> void rawsSort(T[] arr) {
-        rawsSort(arr, 0, arr.length - 1);
+    public static <T extends Comparable<T>> void rawSort(T[] arr) {
+        rawSort(arr, 0, arr.length - 1);
     }
 
-    public static <T extends Comparable<T>> void rawsSort(T[] arr, int lo, int hi) {
+    public static <T extends Comparable<T>> void rawSort(T[] arr, int lo, int hi) {
         for(int i = lo; i <= hi; i++)
             for(int j = i; j - 1 >= lo && arr[j - 1].compareTo(arr[j]) > 0; j--)
                 swap(arr, j, j - 1);
@@ -41,11 +41,8 @@ public class InsertionSort {
         for(int i = lo; i <= hi; i++) {
             T temp = arr[i]; //暂存，空间换时间
             int j = i;
-            for(; j - 1 >= lo; j--) {
-                if(arr[j - 1].compareTo(temp) > 0)
-                    arr[j] = arr[j - 1]; //向后平移一个位置
-                else
-                    break;
+            for(; j - 1 >= lo && arr[j - 1].compareTo(temp) > 0; j--) {
+                arr[j] = arr[j - 1]; //向后平移一个位置
             }
             arr[j] = temp;
         }
@@ -108,7 +105,7 @@ public class InsertionSort {
 
         Integer[] integers1 = Arrays.copyOf(integers, integers.length);
         System.out.println("integers1: " + Arrays.toString(integers1));
-        InsertionSort.rawsSort(integers1);
+        InsertionSort.rawSort(integers1);
         System.out.println("integers1 sorted: " + Arrays.toString(integers1));
 
         Integer[] integers2 = Arrays.copyOf(integers, integers.length);
