@@ -52,6 +52,7 @@ public class QuickSort {
     /**
      * 解决 “存在较多重复元素的数组，排序性能大幅下降的问题
      * arr[lo+1,i-1] <= flag, arr[j+1, hi] >= flag
+     * 极端情况下，全部都是重复元素0的数组，也能较为平均的partition成两部分，避免了递归深度过大的问题
      */
     public static <T extends Comparable<T>> int partition2(T[] arr, int lo, int hi) {
         //通过随机处理，避免在数组近乎或完全有序的极端情况下，算法退化成O(n^2)，
@@ -63,7 +64,7 @@ public class QuickSort {
         while(true) {
             while(i <= j && arr[i].compareTo(arr[lo]) < 0) i++; //此处不能改为<=0, 否则重复元素数组排序性能差
             while(j >= i && arr[j].compareTo(arr[lo]) > 0) j--; //此处不能改为>=0, 否则重复元素数组排序性能差
-            if(i >= j) break;
+            if(i >= j) break;   // i==j时，满足arr[i]>=arr[lo] && arr[j]<=arr[lo] --> arr[i]==arr[j]==arr[lo]
             swap(arr, i++, j--);
         }
         swap(arr, lo, j); //因为j是从后往前遍历，最终i==j或者j落在 <v 的区间末尾
