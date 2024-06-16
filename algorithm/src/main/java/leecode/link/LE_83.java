@@ -1,9 +1,9 @@
 package leecode.link;
 
-public class Lee83 {
+public class LE_83 {
     public ListNode deleteDuplicates(ListNode head) {
-        ListNode dummy = new ListNode(Integer.MIN_VALUE, head);
-        ListNode prev = dummy;
+        ListNode dmy = new ListNode(Integer.MIN_VALUE, head);
+        ListNode prev = dmy;
         while(prev.next != null) {
             if(prev.val == prev.next.val) {
                 prev.next = prev.next.next;
@@ -11,6 +11,6 @@ public class Lee83 {
                 prev = prev.next;
             }
         }
-        return dummy.next;
+        return dmy.next;
     }
 }

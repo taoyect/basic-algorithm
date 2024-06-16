@@ -1,12 +1,13 @@
 package leecode.link;
 
-public class Lee82 {
+public class LM_82 {
     public ListNode deleteDuplicates(ListNode head) {
-        ListNode dummy = new ListNode(Integer.MIN_VALUE, head);
-        ListNode prev = dummy;
+        ListNode dmy = new ListNode(Integer.MIN_VALUE, head);
+        ListNode prev = dmy;
         while(prev.next != null) {
             ListNode cur = prev.next;
             boolean curDel = false;
+        //循环删除和当前元素重复的后续元素，如果存在重复元素，标记当前元素为“需要删除”
             while(cur.next != null) {
                 if(cur.val == cur.next.val) {
                    curDel = true;
@@ -21,6 +22,6 @@ public class Lee82 {
                 prev = prev.next;
             }
         }
-        return dummy.next;
+        return dmy.next;
     }
 }

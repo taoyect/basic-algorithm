@@ -1,6 +1,6 @@
 package leecode.link;
 
-public class LM148_ {
+public class LM_148 {
     public ListNode sortList(ListNode head) {
       return mergeSort(head);
     }
@@ -11,14 +11,14 @@ public class LM148_ {
             return head;
         }
 
-        ListNode mid = getMid(head);            // 获取链表的中间节点，分别对左右子链表进行排序
+        ListNode mid = mid(head);            // 获取链表的中间节点，分别对左右子链表进行排序
         ListNode right = mergeSort(mid.next);   // 排序右子链表
         mid.next = null;                        // 断开两段子链表
         ListNode left = mergeSort(head);        // 排序左子链表
         return merge(left, right);              // 两个子链表必然有序，合并两个有序的链表
     }
 
-    private ListNode getMid(ListNode head) {
+    private ListNode mid(ListNode head) {
         ListNode slow = head;
         ListNode fast = head.next;
         while(true) {

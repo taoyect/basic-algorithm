@@ -1,6 +1,6 @@
 package leecode.link;
 
-public class Lee2487 {
+public class LM_2487 {
     /**
      * 从右往左找非递减序列
      *
@@ -10,10 +10,7 @@ public class Lee2487 {
      * 递归本质就是在倒着遍历链表
      */
     public ListNode removeNodes(ListNode head) {
-        if(head == null) return null;
-        if(head.next == null) {
-            return head;
-        }
+        if(head == null || head.next == null) return head;
         ListNode subHead = removeNodes(head.next);
         if(head.val < subHead.val) {
             return subHead;
@@ -48,6 +45,6 @@ public class Lee2487 {
     public static void main(String[] args) {
         int[] case1 = new int[] {5,2,13,3,8};
         ListNode case1List = new ListNode(case1);
-        ListNode listNode = new Lee2487().removeNodes(case1List);
+        ListNode listNode = new LM_2487().removeNodes(case1List);
     }
 }
