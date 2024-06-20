@@ -33,10 +33,7 @@ public class LM142 {
     public ListNode detectCycle1(ListNode head) {
         HashSet<ListNode> s = new HashSet<>();
         while (head != null) {
-            if(!s.add(head)) {  //Returns: true if this set did not already contain the specified element
-
-                return head;
-            }
+            if(!s.add(head)) return head;   //Returns: true if this set did not already contain the specified element
             head = head.next;
         }
         return null;

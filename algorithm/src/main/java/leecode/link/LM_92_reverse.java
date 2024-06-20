@@ -25,24 +25,6 @@ public class LM_92_reverse {
             g.next = remove;            //最后插入
         }
         return dmy.next;
-
-
-//        ListNode dmy = new ListNode(-1, head);
-//        ListNode g = dmy;
-//        for(int i = 1; i < left; i++) {
-//            g = g.next;
-//        }
-//        ListNode p = g.next;
-//
-//
-//        for (int i = 0; i < right - left; i++) {
-//            ListNode removed = p.next;
-//            p.next = removed.next;
-//
-//            removed.next = g.next;
-//            g.next = removed;
-//        }
-//        return dmy.next;
     }
 
     /**

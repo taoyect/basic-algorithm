@@ -8,8 +8,7 @@ public class LM_61_rotate {
      * 2. 2. 找到尾节点(指针p)，算出size，尾连头构建环; p继续往前走（size - k%size）步, 定位新的头节点，接着断开链表即可。
      */
     public ListNode rotateRight(ListNode head, int k) {
-        if(head == null || head.next == null) return head;
-        if(k == 0) return head;
+        if(head == null || head.next == null || k == 0) return head;
         int size = 0;
         ListNode p = new ListNode(-1, head);
         while(p.next != null) {
