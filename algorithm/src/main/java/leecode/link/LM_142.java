@@ -2,7 +2,7 @@ package leecode.link;
 
 import java.util.HashSet;
 
-public class LM142 {
+public class LM_142 {
         public ListNode detectCycle(ListNode head) {
         ListNode slow = head;
         ListNode fast = head;
@@ -25,7 +25,7 @@ public class LM142 {
     public static void main(String[] args) {
         int[] arr = {3,2,0,-4};
         ListNode list = new ListNode(arr);
-        ListNode listNode = new LM142().detectCycle(list);
+        ListNode listNode = new LM_142().detectCycle(list);
         System.out.println(listNode);
     }
 
@@ -33,10 +33,7 @@ public class LM142 {
     public ListNode detectCycle1(ListNode head) {
         HashSet<ListNode> s = new HashSet<>();
         while (head != null) {
-            if(!s.add(head)) {  //Returns: true if this set did not already contain the specified element
-
-                return head;
-            }
+            if(!s.add(head)) return head;   //Returns: true if this set did not already contain the specified element
             head = head.next;
         }
         return null;
