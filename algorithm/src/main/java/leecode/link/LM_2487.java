@@ -1,6 +1,28 @@
 package leecode.link;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 public class LM_2487 {
+
+    public ListNode removeNodes(ListNode head) {
+        Deque<ListNode> stack = new ArrayDeque<>();
+        while(head != null) {
+            while(!stack.isEmpty() && stack.peek().val < head.val) {
+                stack.pop();
+            }
+            stack.push(head);
+            head = head.next;
+        }
+        ListNode nx = null;
+        while (!stack.isEmpty()) {
+            ListNode cur = stack.pop();
+            cur.next = nx;
+            nx = cur;
+        }
+        return nx;
+    }
+
     /**
      * 从右往左找非递减序列
      *
@@ -9,9 +31,9 @@ public class LM_2487 {
      * 空间复杂度：O(n)，需要 O(n)的栈空间。
      * 递归本质就是在倒着遍历链表
      */
-    public ListNode removeNodes(ListNode head) {
+    public ListNode removeNodes1(ListNode head) {
         if(head == null || head.next == null) return head;
-        ListNode subHead = removeNodes(head.next);
+        ListNode subHead = removeNodes1(head.next);
         if(head.val < subHead.val) {
             return subHead;
         }
