@@ -1,7 +1,5 @@
 package leecode.link;
 
-import lombok.val;
-
 import java.util.HashMap;
 import java.util.Map;
 
