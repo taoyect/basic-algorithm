@@ -5,6 +5,10 @@ import lombok.Getter;
 
 import java.util.*;
 
+/**
+ * 1. 不包含重复元素
+ *
+ */
 public class BST<E extends Comparable<E>> {
     private class Node {
         private E e;
@@ -259,7 +263,7 @@ public class BST<E extends Comparable<E>> {
     //前序遍历以node为根的二分搜索树，非递归方式
     public void preOrderNR() {
         if(root == null) return;
-        ArrayStack2<Node> stack = new ArrayStack2<>();
+        Deque<Node> stack = new ArrayDeque<>();
         stack.push(root);
         while(!stack.isEmpty()) {
             Node current = stack.pop();
@@ -272,7 +276,7 @@ public class BST<E extends Comparable<E>> {
     }
     public void inOrderNR() {
         if(root == null) return;
-        ArrayStack2<Node> stack = new ArrayStack2<>();
+        Deque<Node> stack = new ArrayDeque<>();
         Node current = root;
         while(current != null || !stack.isEmpty()) {
             while(current != null) {
