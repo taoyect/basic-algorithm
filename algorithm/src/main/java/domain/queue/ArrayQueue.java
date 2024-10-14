@@ -1,6 +1,6 @@
 package domain.queue;
 
-import domain.Array;
+import domain.basic.Array;
 
 public class ArrayQueue<E> implements Queue<E> {
 
@@ -26,12 +26,12 @@ public class ArrayQueue<E> implements Queue<E> {
 
     @Override
     public E getFront() {
-        return arr.getFirst();
+        return arr.get(0);
     }
 
     @Override
-    public int getSize() {
-        return arr.getSize();
+    public int size() {
+        return arr.size();
     }
 
     @Override
@@ -39,33 +39,16 @@ public class ArrayQueue<E> implements Queue<E> {
         return arr.isEmpty();
     }
 
-    public int getCapacity() {
-        return arr.getCapacity();
-    }
-
     @Override
     public String toString() {
-        StringBuilder res = new StringBuilder();
-        res.append("Queue: front [");
-        for(int i = 0; i < arr.getSize(); i++) {
+        StringBuilder res = new StringBuilder("front [");
+        for(int i = 0; i < arr.size(); i++) {
             res.append(arr.get(i));
-            if(i != arr.getSize() - 1) {
+            if(i != arr.size() - 1) {
                 res.append(", ");
             }
         }
-        res.append("] tail");
-        return res.toString();
+        return res.append("] tail").toString();
     }
 
-    public static void main(String[] args) {
-        ArrayQueue<Integer> arrayQueue = new ArrayQueue<>();
-        for(int i = 0; i < 5; i++) {
-            arrayQueue.enqueue(i);
-            System.out.println("i:" + i + ", " + arrayQueue);
-            if(i % 3 == 2) {
-                System.out.println("arrayQueue.dequeue:" + arrayQueue.dequeue());
-                System.out.println(arrayQueue);
-            }
-        }
-    }
 }

@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 public class ArrayStack2<E> implements Stack<E> {
 
-    private final ArrayList<E> arrayList;
+    private final ArrayList<E> list;
 
     public ArrayStack2(int capacity) {
-        arrayList = new ArrayList<>(capacity);
+        list = new ArrayList<>(capacity);
     }
 
     public ArrayStack2() {
@@ -15,54 +15,40 @@ public class ArrayStack2<E> implements Stack<E> {
     }
 
     @Override
-    public int getSize() {
-        return arrayList.size();
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return arrayList.isEmpty();
-    }
-
-    @Override
     public void push(E e) {
-        arrayList.add(e);
+        list.add(e);
     }
 
     @Override
     public E pop() {
-        return arrayList.remove(arrayList.size() - 1);
+        return list.remove(list.size() - 1);
     }
 
     @Override
     public E peek() {
-        return arrayList.get(arrayList.size() - 1);
+        return list.get(list.size() - 1);
+    }
+
+    @Override
+    public int size() {
+        return list.size();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return list.isEmpty();
     }
 
     @Override
     public String toString() {
-        StringBuilder res = new StringBuilder();
-        res.append("Stack: [");
-        for(int i = 0; i < arrayList.size(); i++) {
-            res.append(arrayList.get(i));
-            if(i != arrayList.size() - 1) {
+        StringBuilder res = new StringBuilder("stack: [");
+        for(int i = 0; i < list.size(); i++) {
+            res.append(list.get(i));
+            if(i != list.size() - 1) {
                 res.append(", ");
             }
         }
-        res.append("] top");
-        return res.toString();
+        return res.append("] top").toString();
     }
 
-    public static void main(String[] args) {
-        ArrayStack2<Integer> stack = new ArrayStack2<>();
-        for(int i = 0; i < 5; i++) {
-            stack.push(i);
-        }
-        System.out.println(stack);
-        System.out.println(stack.pop());
-        System.out.println(stack.peek());
-        System.out.println(stack);
-        System.out.println(stack.isEmpty());
-        System.out.println(stack.getSize());
-    }
 }

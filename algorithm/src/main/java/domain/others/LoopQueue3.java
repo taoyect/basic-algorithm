@@ -1,4 +1,6 @@
-package domain.queue;
+package domain.others;
+
+import domain.queue.Queue;
 
 /**
  * 在这一版本的实现中，我们完全不使用size，只使用front和tail来完成LoopQueue的所有逻辑
@@ -29,7 +31,7 @@ public class LoopQueue3<E> implements Queue<E> {
         }
 
         @Override
-        public int getSize(){
+        public int size(){
             // 注意此时getSize的逻辑:
             // 如果tail >= front，非常简单，队列中的元素个数就是tail - front
             // 如果tail < front，说明我们的循环队列"循环"起来了，此时，队列中的元素个数为：
@@ -56,7 +58,7 @@ public class LoopQueue3<E> implements Queue<E> {
             E ret = arr[front];
             arr[front] = null;
             front = (front + 1) % arr.length;
-            if(getSize() <= getCapacity() / 4 && getCapacity() / 2 != 0)
+            if(size() <= getCapacity() / 4 && getCapacity() / 2 != 0)
                 resize(getCapacity() / 2);
             return ret;
         }
@@ -71,7 +73,7 @@ public class LoopQueue3<E> implements Queue<E> {
         @SuppressWarnings("unchecked")
         private void resize(int newCapacity){
             E[] newArr = (E[])new Object[newCapacity + 1];
-            int size = getSize();
+            int size = size();
             for(int i = 0 ; i < size; i ++)
                 newArr[i] = arr[(i + front) % arr.length];
             arr = newArr;
@@ -82,27 +84,15 @@ public class LoopQueue3<E> implements Queue<E> {
         @Override
         public String toString(){
             StringBuilder res = new StringBuilder();
-            res.append(String.format("Queue: size = %d , capacity = %d\n", getSize(), getCapacity()));
+            res.append(String.format("Queue: size = %d , capacity = %d\n", size(), getCapacity()));
             res.append("front [");
-            for(int i = 0; i < getSize(); i++) {
+            for(int i = 0; i < size(); i++) {
                 res.append(arr[(front + i) % arr.length]);
-                if(i != getSize() - 1)
+                if(i != size() - 1)
                     res.append(", ");
             }
             res.append("] tail");
             return res.toString();
         }
 
-        public static void main(String[] args){
-            LoopQueue3<Integer> queue = new LoopQueue3<>();
-            for(int i = 0 ; i < 10 ; i ++){
-                queue.enqueue(i);
-                System.out.println(queue);
-
-                if(i % 3 == 2){
-                    System.out.println("queue.dequeue:" + queue.dequeue());
-                    System.out.println(queue);
-                }
-            }
-        }
 }

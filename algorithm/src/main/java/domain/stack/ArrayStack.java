@@ -1,6 +1,6 @@
 package domain.stack;
 
-import domain.Array;
+import domain.basic.Array;
 
 public class ArrayStack<E> implements Stack<E> {
 
@@ -11,16 +11,6 @@ public class ArrayStack<E> implements Stack<E> {
     }
     public ArrayStack() {
         arr = new Array<>();
-    }
-
-    @Override
-    public int getSize() {
-        return arr.getSize();
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return arr.isEmpty();
     }
 
     @Override
@@ -35,31 +25,29 @@ public class ArrayStack<E> implements Stack<E> {
 
     @Override
     public E peek() {
-        return arr.getLast();
+        return arr.get(arr.size() - 1);
+    }
+
+    @Override
+    public int size() {
+        return arr.size();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return arr.isEmpty();
     }
 
     @Override
     public String toString() {
-        StringBuilder res = new StringBuilder();
-        res.append("Stack: [");
-        for(int i = 0; i < arr.getSize(); i++) {
+        StringBuilder res = new StringBuilder("stack: [");
+        for(int i = 0; i < arr.size(); i++) {
             res.append(arr.get(i));
-            if(i != arr.getSize() - 1) {
+            if(i != arr.size() - 1) {
                 res.append(", ");
             }
         }
-        res.append("] top");
-        return res.toString();
+        return res.append("] top").toString();
     }
 
-    public static void main(String[] args) {
-        ArrayStack<Integer> stack = new ArrayStack<>();
-        for(int i = 0; i < 5; i++) {
-            stack.push(i);
-        }
-        System.out.println(stack);
-        System.out.println(stack.pop());
-        System.out.println(stack.peek());
-        System.out.println(stack);
-    }
 }

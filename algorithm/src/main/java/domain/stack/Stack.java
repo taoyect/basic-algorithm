@@ -1,7 +1,7 @@
 package domain.stack;
 
 public interface Stack<E> {
-    int getSize();
+    int size();
     boolean isEmpty();
     void push(E e);
     E pop();

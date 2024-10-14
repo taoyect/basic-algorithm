@@ -52,6 +52,7 @@ public class QuickSort {
     /**
      * 解决 “存在较多重复元素的数组，排序性能大幅下降的问题
      * arr[lo+1,i-1] <= flag, arr[j+1, hi] >= flag
+     * 极端情况下，全部都是重复元素0的数组，也能较为平均的partition成两部分，避免了递归深度过大的问题
      */
     public static <T extends Comparable<T>> int partition2(T[] arr, int lo, int hi) {
         //通过随机处理，避免在数组近乎或完全有序的极端情况下，算法退化成O(n^2)，
@@ -63,7 +64,7 @@ public class QuickSort {
         while(true) {
             while(i <= j && arr[i].compareTo(arr[lo]) < 0) i++; //此处不能改为<=0, 否则重复元素数组排序性能差
             while(j >= i && arr[j].compareTo(arr[lo]) > 0) j--; //此处不能改为>=0, 否则重复元素数组排序性能差
-            if(i >= j) break;
+            if(i >= j) break;   // i==j时，满足arr[i]>=arr[lo] && arr[j]<=arr[lo] --> arr[i]==arr[j]==arr[lo]
             swap(arr, i++, j--);
         }
         swap(arr, lo, j); //因为j是从后往前遍历，最终i==j或者j落在 <v 的区间末尾
@@ -124,22 +125,24 @@ public class QuickSort {
      *         |  |
      *         |  |
      *         j  i
-     * start flag = arr[0] = 4, j = 0, i = j + 1
+     * start flag = arr[0] = 4, j = 0, i = 0 + 1 = 1
      * 1. j = 0, i = 1;  arr[i] = 6 > flag --> i++
      * 2. j = 0, i = 2;  arr[i] = 5 > flag --> i++
      * 3. j = 0, i = 3;  arr[i] = 2 < flag --> j++, swap(i, j), i++
-     *        4 6 5 2 3 8 7 1
-     * j++      j   i
+     * j++    4 6 5 2 3 8 7 1
+     *          j   i
      * swap   4 2 5 6 3 8 7 1
-     * i++      j     i
-     * 4. j = 1, i = 4; arr[i] = 3 < flag --> j++, swap(i, j), j++
+     *          j   i
+     * i++    4 2 5 6 3 8 7 1
+     *          j     i
+     * 4. j = 1, i = 4; arr[i] = 3 < flag --> swap(i, ++j), i++
      *        4 2 3 6 5 8 7 1
      *            j     i
      * ....
      *
-     *
      */
-    //arr[lo+1...j] < flag, arr[j+1...i-1] > flag
+    //arr[lo+1...j] < v, arr[j+1...i-1] > v
+    //v = flag
     public static <T extends Comparable<T>> int partitionV1(T[] arr, int lo, int hi) {
         T flag = arr[lo];
         int j = lo;
@@ -151,6 +154,7 @@ public class QuickSort {
     }
 
     public static <T> void swap(T[] arr, int a, int b) {
+        if(a == b) return;
         T temp = arr[a];
         arr[a] = arr[b];
         arr[b] = temp;

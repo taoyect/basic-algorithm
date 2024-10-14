@@ -1,4 +1,6 @@
-package domain.queue;
+package domain.others;
+
+import domain.queue.Queue;
 
 public class LoopQueue2<E> implements Queue<E> {
     private E[] arr;
@@ -50,7 +52,7 @@ public class LoopQueue2<E> implements Queue<E> {
     }
 
     @Override
-    public int getSize() {
+    public int size() {
         return size;
     }
 
@@ -87,15 +89,4 @@ public class LoopQueue2<E> implements Queue<E> {
         return res.toString();
     }
 
-    public static void main(String[] args) {
-        LoopQueue2<Integer> queue = new LoopQueue2<>();
-        for(int i = 0; i < 10; i++) {
-            queue.enqueue(i);
-            System.out.println("i:" + i + ", " + queue);
-            if(i % 3 == 2) {
-                System.out.println("queue.dequeue:" + queue.dequeue());
-                System.out.println(queue);
-            }
-        }
-    }
 }
