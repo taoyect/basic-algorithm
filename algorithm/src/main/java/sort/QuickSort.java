@@ -100,6 +100,8 @@ public class QuickSort {
         return j;
     }
 
+
+
     public static <T extends Comparable<T>> int partitionV2(T[] arr, int lo, int hi) {
         //通过随机处理，避免在数组近乎或完全有序的极端情况下，算法退化成O(n^2)，且递归深度为O(n)，导致栈溢出
         int randomIndex = random.nextInt(hi - lo + 1) + lo;
