@@ -1,6 +1,5 @@
 package domain.tree;
 
-import domain.stack.ArrayStack2;
 import lombok.Getter;
 
 import java.util.*;
@@ -16,17 +15,11 @@ public class BST<E extends Comparable<E>> {
 
         public Node(E e) {
             this.e = e;
-//            left = right = null;
         }
     }
     @Getter
     private Node root;
     private int size;
-
-//    public BST() {
-//        root = null;
-//        size = 0;
-//    }
 
     public int size() {
         return size;
@@ -41,63 +34,66 @@ public class BST<E extends Comparable<E>> {
     }
     //向以node为根节点的二分搜索树中插入元素e, 递归方式
     //返回插入新节点后二分搜索树的根
-    private Node add(Node node, E e) {
-        if(node == null) {
+    private Node add(Node r, E e) {
+        if(r == null) {
             size++;
             return new Node(e);
         }
-        if(e.compareTo(node.e) < 0)
-            node.left = add(node.left, e);
-        else if(e.compareTo(node.e) > 0)
-            node.right = add(node.right, e);
-        return node;
+        if(e.compareTo(r.e) < 0)
+            r.left = add(r.left, e);
+        else if(e.compareTo(r.e) > 0)
+            r.right = add(r.right, e);
+        return r;
     }
 
     public boolean contains(E e) {
         return contains(root, e);
     }
 
-    private boolean contains(Node node, E e) {
-        if(node == null) return false;
-        if(e.compareTo(node.e) == 0)
+    //看以node为根的二分搜索树中是否包含元素e, 递归
+    private boolean contains(Node r, E e) {
+        if(r == null) return false;
+        if(e.compareTo(r.e) == 0)
             return true;
-        else if(e.compareTo(node.e) < 0)
-            return contains(node.left, e);
+        else if(e.compareTo(r.e) < 0)
+            return contains(r.left, e);
         else
-            return contains(node.right, e);
+            return contains(r.right, e);
     }
 
     public void preOrder() {
         preOrder(root);
     }
     //前序遍历以node为根的二分搜索树，递归方式
-    private void preOrder(Node node) {
-        if(node == null) return;
-        System.out.print(node.e + " ");//访问当前节点做操作
-        preOrder(node.left);
-        preOrder(node.right);
+    //访问该节点的操作在“访问左右子树”前面
+    private void preOrder(Node r) {
+        if(r == null) return;    //节点为null，没什么好遍历的了
+        System.out.print(r.e + " ");//访问当前节点做操作
+        preOrder(r.left);
+        preOrder(r.right);
     }
 
     public void inOrder() {
         inOrder(root);
     }
-    //中序遍历以node为根的二分搜索树，递归方式
-    private void inOrder(Node node) {
-        if(node == null) return;
-        inOrder(node.left);
-        System.out.print(node.e + " ");//访问当前节点做操作
-        inOrder(node.right);
+    //中序遍历以r为根的二分搜索树，递归方式 【中序遍历的结果是顺序的】
+    //左 --> 中 --> 右
+    private void inOrder(Node r) {
+        if(r == null) return;
+        inOrder(r.left);
+        System.out.print(r.e + " ");//访问当前节点做操作
+        inOrder(r.right);
     }
 
     public void postOrder() {
         postOrder(root);
     }
-    //后序遍历以node为根的二分搜索树，递归方式
-    private void postOrder(Node node) {
-        if(node == null) return;
-        postOrder(node.left);
-        postOrder(node.right);
-        System.out.print(node.e + " ");//访问当前节点做操作
+    //后序遍历以r为根的二分搜索树，递归方式
+    private void postOrder(Node r) {
+        if(r == null) return;
+        postOrder(r.left);
+        postOrder(r.right);
+        System.out.print(r.e + " ");//访问当前节点做操作
     }
     //层序遍历，广度优先遍历
     public List<List<E>> levelOrder() {
@@ -119,87 +115,168 @@ public class BST<E extends Comparable<E>> {
         return list;
     }
 
-    public Node remove(Node node, E e) {
-        if(node == null) return null;
-        if(e.compareTo(node.e) == 0) {
-            if(node.left == null) { //待删除节点左子树为空的情况
-                Node rightNode = node.right;
-                node.right = null;
-                size--;
-                return rightNode;
+//    public void levelOrder(Node r) {
+//        if (r == null) return;
+//        Queue<Node> q = new LinkedList<>();
+//        q.offer(r);
+//        while (!q.isEmpty()) {
+//            Node cur = q.poll(); //current
+//
+//            System.out.print(cur.e + " "); // 访问当前节点
+//
+//            // 将当前节点的所有子节点加入队列
+//            if (cur.left != null) q.offer(cur.left);
+//            if (cur.right != null) q.offer(cur.right);
+//        }
+//    }
+
+    public List<List<E>> levelOrder(Node r) {
+        List<List<E>> list = new ArrayList<>();
+        if(r == null) return list;
+        Queue<Node> q = new LinkedList<>();
+        q.offer(r);
+        while(!q.isEmpty()) {
+            int levelSize = q.size();
+            List<E> levelList = new ArrayList<>();
+            for(int i = 0; i < levelSize; i++) {  // 遍历当前层的所有节点
+                Node cur = q.poll();
+                levelList.add(cur.e);
+                if(cur.left != null) q.offer(cur.left); //必须要判断null，以避免空指针异常
+                if(cur.right != null) q.offer(cur.right);
             }
-            if(node.right == null) { //待删除节点右子树为空的情况
-                Node leftNode = node.left;
-                node.left = null;
-                size--;
-                return leftNode;
-            }
-            //待删除节点左右子树均不为空的情况：用右子树最小节点顶替待删除节点的位置 (1962 Hibbard Deletion)
-            Node successor = minimum(node.right);
-            successor.right = removeMin(node.right);
-            successor.left = node.left;
-            node.left = node.right = null;
-            return successor;
-        } else if(e.compareTo(node.e) < 0) {
-            node.left = remove(node.left, e);
-            return node;
-        } else {
-            node.right = remove(node.right, e);
-            return node;
+            list.add(levelList);
         }
+        return list;
     }
 
-    //删除以node为根的二分搜索树的最小节点，返回删除节点后新的二分搜索树的根
-    public Node removeMin(Node node) {
-        if(node == null) return null;
-        if(node.left == null) {
-            Node rightNode = node.right;
-            node.right = null;
+    //[[2, 4, 6, 8], [3, 7], [5]]
+    public List<List<E>> bottomUpLevelOrder(Node r) {
+        List<List<E>> list = new ArrayList<>();
+        if(r == null) return list;
+        Queue<Node> q = new LinkedList<>();
+        q.offer(r);
+        while(!q.isEmpty()) {
+            int levelSize = q.size();
+            List<E> levelList = new ArrayList<>();
+            for(int i = 0; i < levelSize; i++) {  // 遍历当前层的所有节点
+                Node cur = q.poll();
+                levelList.add(cur.e);
+                if(cur.left != null) q.offer(cur.left); //必须要判断null，以避免空指针异常
+                if(cur.right != null) q.offer(cur.right);
+            }
+            list.add(0, levelList);
+        }
+        return list;
+    }
+
+    //[[5], [7, 3], [2, 4, 6, 8]]
+    public List<List<E>> zigzagLevelOrder(Node r) {
+        List<List<E>> list = new ArrayList<>();
+        if(r == null) return list;
+        Queue<Node> q = new LinkedList<>();
+        q.offer(r);
+        boolean leftToRight = true; // 用于标记当前层的遍历方向
+        while(!q.isEmpty()) {
+            int levelSize = q.size();
+            List<E> levelList = new ArrayList<>();
+            for(int i = 0; i < levelSize; i++) {  // 遍历当前层的所有节点
+                Node cur = q.poll();
+                levelList.add(cur.e);
+                // 将当前节点的左右子节点加入队列
+                if(cur.left != null) q.offer(cur.left);
+                if(cur.right != null) q.offer(cur.right);
+            }
+            if(!leftToRight) {  // 如果是偶数层，则反转当前层的顺序
+                Collections.reverse(levelList);
+            }
+            list.add(levelList);
+
+            leftToRight = !leftToRight; // 反转遍历方向
+        }
+        return list;
+    }
+
+    public Node remove(Node r, E e) {
+        if(r == null) return null;
+        if(e.compareTo(r.e) < 0) {
+            r.left = remove(r.left, e);
+            return r;
+        } else if(e.compareTo(r.e) > 0) {
+            r.right = remove(r.right, e);
+            return r;
+        }
+        if(r.left == null) { //待删除节点左子树为空的情况
+            Node rightNode = r.right;
+            r.right = null;
             size--;
             return rightNode;
         }
-        node.left = removeMin(node.left);
-        return node;
+        if(r.right == null) { //待删除节点右子树为空的情况
+            Node leftNode = r.left;
+            r.left = null;
+            size--;
+            return leftNode;
+        }
+        //待删除节点左右子树均不为空的情况：用右子树最小节点顶替待删除节点的位置 (1962 Hibbard Deletion)
+        Node successor = min(r.right);
+        successor.right = removeMin(r.right);
+        successor.left = r.left;
+        r.left = null;
+        r.right = null;
+        return successor;
     }
 
-    public Node removeMinNR(Node node) {
-        if(node == null) return null;
-        if(node.left == null) {
-            Node rightNode = node.right;
-            node.right = null;
+    //删除以r为根的二分搜索树的最小节点，返回删除节点后新的二分搜索树的根
+    public Node removeMin(Node r) {
+        if(r == null) return null;
+        if(r.left == null) {
+            Node rightNode = r.right;
+            r.right = null;
             size--;
             return rightNode;
         }
-        Node root = node; //记录根节点
+        r.left = removeMin(r.left);
+        return r;
+    }
+
+    public Node removeMinNR(Node r) {
+        if(r == null) return null;
+        if(r.left == null) {
+            Node rightNode = r.right;
+            r.right = null;
+            size--;
+            return rightNode;
+        }
         Node pre = null;
-        while(node.left != null) {
-            pre = node;
-            node = node.left;
+        Node root = r; //记录根节点
+        while(r.left != null) {
+            pre = r;
+            r = r.left;
         }
-        pre.left = node.right;
-        node.right = null; //显示断开node.right
+        pre.left = r.right;
+        r.right = null; //显式断开node.right
         return root;
     }
 
-    //返回以node为根的二分搜索树的最小值所在的节点
-    private Node minimum(Node node) {
-        if(node.left == null) return node;
-        return minimum(node.left);
+    //返回以r为根的二分搜索树的最小值所在的节点
+    private Node min(Node r) {
+        if(r.left == null) return r;
+        return min(r.left);
     }
-    public Node minimumNR(Node node) {
-        while(node.left != null)
-            node = node.left;
-        return node;
+    public Node minNR(Node r) {
+        while(r.left != null)
+            r = r.left;
+        return r;
     }
 
-    private Node maximum(Node node) {
-        if(node.right == null) return node;
-        return maximum(node.right);
+    private Node max(Node r) {
+        if(r.right == null) return r;
+        return max(r.right);
     }
-    private Node maximumNR(Node node) {
-        while(node.right != null)
-            node = node.right;
-        return node;
+    private Node maxNR(Node r) {
+        while(r.right != null)
+            r = r.right;
+        return r;
     }
 //    public Node remove(Node root, E e) {
 //        if(root == null || e == null) return root;
@@ -245,21 +322,25 @@ public class BST<E extends Comparable<E>> {
 
 
     ///////////////[ 其他 ]////////////////////////////////////////////////
-    public void addNR(E e) {
-        if(root == null) { root = new Node(e);  size++; return; }
-        Node p = root;
-        while(p != null) {
-            if(e.compareTo(p.e) < 0) {
-                if(p.left == null) { p.left = new Node(e); size++; return; }
-                p = p.left;
-            } else if(e.compareTo(p.e) > 0){
-                if(p.right == null) { p.right = new Node(e); size++; return; }
-                p = p.right;
+    private Node addNR(Node r, E e) {
+        if(r == null) {
+            size++;
+            return new Node(e);
+        }
+        Node current = r;
+        while (true) {
+            if (e.compareTo(current.e) < 0) {
+                if (current.left == null) { current.left = new Node(e); size++; return r; } // 插入到左子树
+                current = current.left; // 向左子树继续查找
+            } else if (e.compareTo(current.e) > 0) {
+                if (current.right == null) { current.right = new Node(e); size++; return r; } // 插入到右子树
+                current = current.right; // 向右子树继续查找
             } else {
-                return;
+                return r;  // 如果元素相等，直接返回，不做任何插入
             }
         }
     }
+
     //前序遍历以node为根的二分搜索树，非递归方式
     public void preOrderNR() {
         if(root == null) return;
@@ -299,27 +380,27 @@ public class BST<E extends Comparable<E>> {
             if(current.right != null) q.add(current.right);
         }
     }
-    public E minimum() {
+    public E min() {
         if(size == 0)
             throw new IllegalArgumentException("BST is empty!");
-        return minimum(root).e;
+        return min(root).e;
     }
 
-    public E maximum() {
+    public E max() {
         if(size == 0)
             throw new IllegalArgumentException("BST is empty!");
-        return maximum(root).e;
+        return max(root).e;
     }
 
     //从二分搜索树中删除最小值所在的节点，返回最小值
     public E removeMin() {
-        E ret = minimum();
+        E ret = min();
         root = removeMin(root);
         return ret;
     }
 
     public E removeMax() {
-        E ret = maximum();
+        E ret = max();
         root = removeMax(root);
         return ret;
     }
@@ -335,4 +416,5 @@ public class BST<E extends Comparable<E>> {
         node.right = removeMax(node.right);
         return node;
     }
+
 }

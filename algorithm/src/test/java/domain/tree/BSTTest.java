@@ -1,8 +1,10 @@
 package domain.tree;
 
+import domain.basic.Array;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class BSTTest {
 
@@ -38,7 +40,6 @@ public class BSTTest {
         int[] nums = {5, 3, 7, 6, 8, 4, 2};
         Arrays.stream(nums).forEach(bst::add);
         bst.inOrder(); //2 3 4 5 6 7 8
-        System.out.println(bst.levelOrder());
     }
     @Test
     public void testInOrderNR() {
@@ -69,14 +70,20 @@ public class BSTTest {
         BST<Integer> bst = new BST<>();
         int[] nums = {5, 3, 7, 6, 8, 4, 2};
         Arrays.stream(nums).forEach(bst::add);
-        bst.levelOrder(); //5 3 7 2 4 6 8
+//        bst.levelOrder(bst.getRoot()); //5 3 7 2 4 6 8
+        List<List<Integer>> a = bst.levelOrder(bst.getRoot());
+        System.out.println(a);
+        List<List<Integer>> b = bst.bottomUpLevelOrder(bst.getRoot());
+        System.out.println(b);
+        List<List<Integer>> c = bst.zigzagLevelOrder(bst.getRoot());
+        System.out.println(c);
     }
     @Test
     public void testMinimum() {
         BST<Integer> bst = new BST<>();
         int[] nums = {5, 3, 7, 6, 8, 4, 2};
         Arrays.stream(nums).forEach(bst::add);
-        System.out.println(bst.minimum());
+        System.out.println(bst.min());
     }
 
     @Test
@@ -84,7 +91,7 @@ public class BSTTest {
         BST<Integer> bst = new BST<>();
         int[] nums = {5, 3, 7, 6, 8, 4, 2};
         Arrays.stream(nums).forEach(bst::add);
-        System.out.println(bst.maximum());
+        System.out.println(bst.max());
     }
     @Test
     public void testRemoveMin() {
@@ -123,8 +130,10 @@ public class BSTTest {
         Arrays.stream(nums).forEach(bst::add);
         System.out.println(bst);
         bst.preOrder(); //5 3 2 4 7 6 8
-        System.out.println(bst.remove(bst.getRoot(), 7));
-        System.out.println(bst);
+        System.out.println();
+        bst.remove(bst.getRoot(), 7);
+//        System.out.println(bst.remove(bst.getRoot(), 7));
+//        System.out.println(bst);
         bst.preOrder(); //5 3 2 4 8 6
 
     }

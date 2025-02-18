@@ -247,20 +247,6 @@ public class Solution {
         return ans;
     }
 
-    public int lengthOfLongestSubstring(String s) {
-        char[] cArr = s.toCharArray();
-        Map<Character, Integer> cntMap = new HashMap<>();
-        int ans = 0;
-        for (int left = 0, right = 0; right < cArr.length; right++) {
-            while (cntMap.get(cArr[right]) != null && cntMap.get(cArr[right]) > 0) {
-                cntMap.merge(cArr[left++], -1, Integer::sum);
-            }
-            cntMap.merge(cArr[right], 1, Integer::sum);
-            ans = Math.max(ans, right - left + 1);
-        }
-        return ans;
-    }
-
     public int equalSubstring(String s, String t, int maxCost) {
         char[] sArr = s.toCharArray();
         char[] tArr = t.toCharArray();
@@ -510,87 +496,191 @@ public class Solution {
     }
 
 
-//    private void swap(int[] nums, int a, int b) {
-//        if (a == b) return;
-//        nums[a] = nums[a] ^ nums[b];
-//        nums[b] = nums[a] ^ nums[b];
-//        nums[a] = nums[a] ^ nums[b];
+    public int lengthOfLongestSubstring(String s) {
+        int ans = 0;
+        char[] cArr = s.toCharArray();
+        Map<Character, Integer> cntMap = new HashMap<>();
+        for (int left = 0, right = 0; right < cArr.length; right++) {
+            cntMap.merge(cArr[right], 1, Integer::sum);
+            while (cntMap.get(cArr[right]) > 1) {
+                cntMap.merge(cArr[left++], -1, Integer::sum);
+            }
+            ans = Math.max(ans, right - left + 1);
+        }
+        return ans;
+    }
+
+    public static <T extends Comparable<T>> void sort(T[] arr, int lo, int hi) {
+        if (lo >= hi) return;
+        int mid = lo + (hi - lo) / 2;
+        sort(arr, lo, mid);
+        sort(arr, mid + 1, hi);
+
+        if (arr[mid].compareTo(arr[mid + 1]) > 0)
+            merge(arr, lo, mid, hi);
+    }
+
+    public static <T extends Comparable<T>> void merge(T[] arr, int lo, int mid, int hi) {
+        T[] tmpArr = Arrays.copyOfRange(arr, lo, hi + 1);
+        int i = lo, j = mid + 1;
+        for (int k = lo; k <= hi; k++) {
+            if (i > mid)
+                arr[k] = tmpArr[j++ - lo];
+            else if (j > hi)
+                arr[k] = tmpArr[i++ - lo];
+            else if (tmpArr[i - lo].compareTo(tmpArr[j - lo]) < 0)
+                arr[k] = tmpArr[i++ - lo];
+            else
+                arr[k] = tmpArr[j++ - lo];
+        }
+    }
+
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int lo = 0, hi = m * n - 1;
+        while (lo <= hi) {
+            int mid = lo + (hi - lo) / 2;
+            int midValue = matrix[mid / n][mid % n];
+            if(target < midValue) hi = mid - 1;
+            else if(target > midValue) lo = mid + 1;
+            else return true;
+        }
+        return false;
+    }
+
+    public int findMin(int[] nums) {
+        int lo = 0, hi = nums.length - 1;
+        while (lo < hi) {
+            int mid = lo + (hi - lo) / 2;
+            if(nums[mid] < nums[hi]) hi = mid;
+            else lo = mid + 1;
+        }
+        return nums[hi]; //或者return nums[lo];
+    }
+
+    public int search(int[] nums, int target) {
+        int minIndex = findMinIndex(nums);
+        int lo = minIndex, hi = minIndex + nums.length - 1;
+        while (lo <= hi) {
+            int mid = lo + (hi - lo) / 2;
+            if(target < nums[mid % nums.length]) hi = mid - 1;
+            else if(target > nums[mid % nums.length]) lo = mid + 1;
+            else return mid % nums.length;
+        }
+        return -1;
+    }
+
+    public int findMinIndex(int[] arr) {
+        int lo = 0, hi = arr.length - 1;
+        while (lo < hi) {
+            int mid = lo + (hi - lo) / 2;
+            if(arr[arr.length - 1] < arr[mid]) lo = mid + 1;
+            else hi = mid;
+        }
+        return lo;
+    }
+
+    public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int totalLength = nums1.length + nums2.length;
+        int[] tmp = new int[totalLength];
+        int mid = (tmp.length - 1) / 2;
+        int i = 0, j = 0;
+        for (int k = 0; k < tmp.length; k++) {
+            if(i >= nums1.length)
+                tmp[k] = nums2[j++];
+            else if(j >= nums2.length)
+                tmp[k] = nums1[i++];
+            else if(nums1[i] < nums2[j])
+                tmp[k] = nums1[i++];
+            else
+                tmp[k] = nums2[j++];
+
+            if(tmp.length % 2 == 0) {
+                if(k == mid + 1) {
+                    return (tmp[mid] + tmp[mid + 1]) * 1.0 / 2;
+                }
+            } else {
+                if(k == mid) {
+                    return tmp[mid];
+                }
+            }
+        }
+        return Double.NaN;
+    }
+
+    public static void main(String[] args) {
+//        Integer[] x = new Integer[]{12, 4, 12, 4, 5, 6, 2, 9};
+//        sort(x, 0, x.length - 1);
+//        System.out.println(search(x, 0, x.length - 1, 6));
+//        System.out.println(search(x, 0, x.length - 1, 7));
+//        System.out.println(search(x, 0, x.length - 1, 12));
+//        System.out.println(upper(x, -1));
+//        System.out.println(upper(x, 2));
+//        System.out.println(upper(x, 12));
+//        System.out.println(lower(x, 5)); //2
+//        System.out.println(lower(x, 2)); //-1
+//        System.out.println(lower(x, 21));//7
+//        System.out.println(Arrays.toString(x));
+        int[] nums1 = new int[] {1,2};
+        int[] nums2 = new int[] {3,4};
+        double medianSortedArrays = findMedianSortedArrays(nums1, nums2);
+        System.out.println(medianSortedArrays);
+    }
+    class Node {
+        public int val;
+        public List<Node> children;
+
+        public Node() {}
+
+        public Node(int _val) {
+            val = _val;
+        }
+
+        public Node(int _val, List<Node> _children) {
+            val = _val;
+            children = _children;
+        }
+    }
+//    public List<Integer> preorder(Node root) {
+//        List<Integer> res = new ArrayList<>();
+//        preOrderInner(root, res);
+//        return res;
 //    }
 //
-//    public static <T> void swap(T[] arr, int a, int b) {
-//        T tmp = arr[a];
-//        arr[a] = arr[b];
-//        arr[b] = tmp;
-//    }
-
-//    public void sortColors(int[] nums) {
-//        if(nums == null) return;
-//        sort(nums, 0, nums.length);
-//    }
-
-    public int findKthLargest(int[] nums, int k) {
-        return findKthLargest(nums, 0, nums.length - 1, nums.length - k);
-    }
-
-    public int findKthLargest(int[] arr, int lo, int hi, int k) {
-        while(lo <= hi) {
-            int p = partition(arr, lo, hi);
-            if(k == p) return arr[p];
-            if(k > p) lo = p + 1;
-            else hi  = p - 1;
-        }
-        return Integer.MIN_VALUE;
-    }
-//    public int findKthLargest(int[] arr, int lo, int hi, int k) {
-//        if(lo > hi) return Integer.MIN_VALUE;
-//        int p = partition(arr, lo, hi);
-//        if(k == p) return arr[p];
-//        if(k > p) return findKthLargest(arr, p + 1, hi, k);
-//        else return findKthLargest(arr, lo, p - 1, k);
-//    }
-
-    public int partition(int[] arr, int lo, int hi) {
-        int j = lo;
-        for (int i = lo + 1; i <= hi; i++) {
-            if(arr[i] < arr[lo])
-                swap(arr, i, ++j);
-        }
-        swap(arr, lo, j);
-        return j;
-    }
-    public void swap(int[] arr, int a, int b) {
-
-        arr[a] = arr[a]^arr[b];
-        arr[b] = arr[a]^arr[b];
-        arr[a] = arr[a]^arr[b];
-    }
-
-//    public void moveZeroes(int[] nums) {
-//        int i = 0, j = 0;
-//        while (j < nums.length) {
-//            if(nums[j] != 0)
-//                swap(nums, i++, j);
-//            j++;
+//    private void preOrderInner(Node root, List<Integer> res) {
+//        if (root == null) return;
+//        res.add(root.val);
+//        for(Node child : root.children) {
+//            preOrderInner(child, res);
 //        }
 //    }
 
-    public static void main(String[] args) {
-        int[] x = new int[]{0,1,0,3,12};
-//        new Solution().moveZeroes(x);
-        System.out.println(Arrays.toString(x));
+    public void preorder(Node r) {
+        if (r == null) return;
+        System.out.print(r.val + " "); // 先访问根节点
+
+        // 然后递归遍历所有子节点
+        for (Node child : r.children) {
+            preorder(child);
+        }
     }
 
-    public static int partition(int[] arr, int lo, int hi) {
-        //通过随机处理，避免在数组近乎或完全有序的极端情况下，算法退化成O(n^2)，且递归深度为O(n)，导致栈溢出
-        int randomIndex = new Random().nextInt(hi - lo + 1) + lo;
-        swap(arr, randomIndex, lo);
 
-        int flag = arr[lo];
-        int j = lo;
-        for(int i = lo + 1; i <= hi; i++) //一直遍历到结尾
-            if(arr[i] < flag)
-                swap(arr, ++j, i);
-        swap(arr, lo, j);
-        return j;
+    public List<Integer> postorder(Node r) {
+        List<Integer> res = new ArrayList<>();
+        postOrderInner(r, res);
+        return res;
     }
+
+    private void postOrderInner(Node r, List<Integer> res) {
+        if(r == null) return;
+        for (Node child : r.children) {
+            postOrderInner(child, res);
+        }
+        res.add(r.val);
+    }
+
+
+
 }
