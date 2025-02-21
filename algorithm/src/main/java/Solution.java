@@ -2,6 +2,7 @@
 import domain.Student;
 import domain.basic.Array;
 import lombok.val;
+import sun.reflect.generics.tree.Tree;
 import utils.TestAlgorithmUtil;
 
 import java.util.*;
@@ -65,48 +66,21 @@ public class Solution {
 //        System.out.println(medianSortedArrays);
     }
 
-    public TreeNode sortedArrayToBST(int[] nums) {
-        return helper(nums, 0, nums.length - 1);
-    }
-    //balanced binary search tree
-//    public TreeNode helper(int[] nums, int lo, int hi) {
-//        if ( lo >  hi) return null;
-//
-//        // 总是选择中间位置左边的数字作为根节点
-//        int mid = (lo + hi) / 2;
-//
-//        TreeNode root = new TreeNode(nums[mid]);
-//        root.left = helper(nums, lo, mid - 1);
-//        root.right = helper(nums, mid + 1,  hi);
-//        return root;
-//    }
-
-    public TreeNode helper(int[] nums, int lo, int hi) {
-        if (lo > hi) return null;
-        int mid = lo + (hi - lo) / 2;
-
-        TreeNode r = new TreeNode(nums[mid]);
-        r.left = helper(nums, lo, mid - 1);
-        r.right = helper(nums, mid + 1, hi);
-        return r;
+    int maxSum = Integer.MIN_VALUE;
+    public int maxPathSum(TreeNode root) {
+        maxGain(root);
+        return maxSum;
     }
 
-    int pre = Integer.MAX_VALUE;
+    public int maxGain(TreeNode r) {
+        if(r == null) return 0;
+        int leftMax = Math.max(maxGain(r.left), 0);
+        int rightMax = Math.max(maxGain(r.right), 0);
 
-    public boolean isValidBST(TreeNode root) {
-        return inOrder(root);
-    }
+        maxSum = Math.max(maxSum, leftMax + rightMax + r.val);
 
-    private boolean inOrder(TreeNode r) {
-        if (r == null) return true;
-        if (!inOrder(r.left)) return false;
-        if (r.val <= pre) {
-            return false;
-        }
-        pre = r.val;
-
-        if (!inOrder(r.right)) return false;
-        return true;
+        return Math.max(leftMax, rightMax) + r.val;
     }
 
 }
+
