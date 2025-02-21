@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package newProto;
+
+option java_multiple_files = true;
+option java_package = "com.example.newProto";
+option java_outer_classname = "ContactProtos";
+
+//使用插件编译的注意点：
+//1. 不能使用相对路径，在插件中定义了
+// protoSourceRoot = ${project.basedir}/src/main/proto,
+// import的路径基于这个就可以了
+import "start/phone.proto";
+
+message PeopleInfo {
+  string name = 1;
+  int32 age = 2;
+
+  //需要带上phone.proto的package
+  repeated start.Phone phone = 3;
+}
+
+message Contacts {
+  repeated PeopleInfo contacts = 1;
+}

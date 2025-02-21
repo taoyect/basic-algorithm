@@ -1,0 +1,14 @@
+//首行：语法指定行
+/* proto2 / proto3 */
+syntax = "proto3";
+
+//proto文件自己的命名空间
+package start;
+
+option java_multiple_files = true;
+option java_package = "com.example.start";
+option java_outer_classname = "PhoneProtos";
+
+message Phone {
+  string number = 1;
+}
